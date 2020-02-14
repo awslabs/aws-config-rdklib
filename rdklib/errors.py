@@ -1,0 +1,2 @@
+class InvalidParametersError(Exception):
+    pass
