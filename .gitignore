@@ -1,0 +1,4 @@
+build
+opt
+.idea
+*__pycache__*

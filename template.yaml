@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: rdklib
+    Description: rdklib library for authoring Config Rules
+    Author: awslabs
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.rst
+    Labels: ['beta']
+    HomePageUrl: https://github.com/awslabs/aws-config-rdklib
+    SemanticVersion: 0.0.2
+    SourceCodeUrl: https://github.com/awslabs/aws-config-rdklib
+
+Description: >
+  rdklib library for authoring Config Rules
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  RdklibLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: rdklib-layer
+      Description: rdklib library for authoring Config Rules
+      ContentUri: ./build
+      CompatibleRuntimes:
+        - python3.6
+        - python3.7
+      LicenseInfo: 'Apache License, Version 2.0'

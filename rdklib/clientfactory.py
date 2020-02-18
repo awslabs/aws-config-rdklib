@@ -31,13 +31,9 @@ def get_assume_role_credentials(role_arn):
         region = os.environ.get('AWS_REGION')
         try:
             #use region specific url for sts client is recommended. In some cases, company firewall policies are blocking the global endpoint sts.amazonaws.com
-            assume_role_response = boto3.client('sts', region_name=region, endpoint_url=f"https://sts.{region}.amazonaws.com").assume_role(RoleArn=role_arn,
-                                                                                                                                           RoleSessionName="configLambdaExecution",
-                                                                                                                                           DurationSeconds=CONFIG_ROLE_TIMEOUT_SECONDS)
+            assume_role_response = boto3.client('sts', region_name=region, endpoint_url=f"https://sts.{region}.amazonaws.com").assume_role(RoleArn=role_arn,RoleSessionName="configLambdaExecution",DurationSeconds=CONFIG_ROLE_TIMEOUT_SECONDS)
         except:
-            assume_role_response = boto3.client('sts').assume_role(RoleArn=role_arn,
-                                                                   RoleSessionName="configLambdaExecution",
-                                                                   DurationSeconds=CONFIG_ROLE_TIMEOUT_SECONDS)
+            assume_role_response = boto3.client('sts').assume_role(RoleArn=role_arn,RoleSessionName="configLambdaExecution",DurationSeconds=CONFIG_ROLE_TIMEOUT_SECONDS)
         return assume_role_response['Credentials']
     except botocore.exceptions.ClientError as ex:
         if 'AccessDenied' in ex.response['Error']['Code']:
