@@ -10,21 +10,16 @@
 # the specific language governing permissions and limitations under the License.
 
 import json
+import six
 
 class ComplianceType:
-    NOT_APPLICABLE = 1
-    COMPLIANT = 2
-    NON_COMPLIANT = 3
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+    COMPLIANT = "COMPLIANT"
+    NON_COMPLIANT = "NON_COMPLIANT"
 
-    def get_name(compliance_type):
-        if compliance_type == 1:
-            return "NOT_APPLICABLE"
-        if compliance_type == 2:
-            return "COMPLIANT"
-        if compliance_type == 3:
-            return "NON_COMPLIANT"
-        raise Exception('The complianceType is not valid. Valid values include: ComplianceType.COMPLIANT, ComplianceType.COMPLIANT and ComplianceType.NOT_APPLICABLE')
-
+    @staticmethod
+    def get_valid_compliances():
+        return [ComplianceType.NOT_APPLICABLE, ComplianceType.COMPLIANT, ComplianceType.NON_COMPLIANT]
 
 class Evaluation:
     annotation = ""
@@ -37,7 +32,7 @@ class Evaluation:
         self.annotation = build_annotation(annotation)
         self.complianceResourceId = resourceId
         self.complianceResourceType = resourceType
-        if complianceType < 1 or complianceType > 3:
+        if not complianceType in ComplianceType.get_valid_compliances():
             print('The complianceType is not valid. Valid values include: ComplianceType.COMPLIANT, ComplianceType.COMPLIANT and ComplianceType.NOT_APPLICABLE')
             raise Exception('The complianceType is not valid. Valid values include: ComplianceType.COMPLIANT, ComplianceType.COMPLIANT and ComplianceType.NOT_APPLICABLE')
         self.complianceType = complianceType
@@ -88,7 +83,7 @@ class Evaluation:
         output = {
             "ComplianceResourceId": self.complianceResourceId,
             "ComplianceResourceType": self.complianceResourceType,
-            "ComplianceType": ComplianceType.get_name(self.complianceType),
+            "ComplianceType": self.complianceType,
             "OrderingTimestamp": self.orderingTimestamp
         }
 

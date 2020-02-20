@@ -17,7 +17,7 @@ class ConfigRule:
     def __init__(self):
         pass
 
-    def evaluate_parameters(self, event, client_factory, rule_parameters):
+    def evaluate_parameters(self, rule_parameters):
         return rule_parameters
 
     def evaluate_change(self, event, client_factory, configuration_item, valid_rule_parameters):

@@ -35,7 +35,7 @@ class Evaluator:
             rule_parameters = json.loads(event['ruleParameters'])
 
         try:
-            valid_rule_parameters = self.__rdk_rule.evaluate_parameters(event, client_factory, rule_parameters)
+            valid_rule_parameters = self.__rdk_rule.evaluate_parameters(rule_parameters)
         except InvalidParametersError as ex:
             return build_parameters_value_error_response(ex)
 

@@ -7,7 +7,6 @@ CONFIG_ROLE_TIMEOUT_SECONDS = 900
 class ClientFactory:
     __sts_credentials = None
     __role_arn = None
-    __region = None
 
     def __init__(self, role_arn):
         self.__role_arn = role_arn

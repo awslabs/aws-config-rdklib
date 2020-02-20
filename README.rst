@@ -1,14 +1,19 @@
 # rdklib
 
+This is a library for Rules Development Kit (https://github.com/awslabs/aws-config-rdk)
+
 A library for writing custom Rules that:
 * Remove the duplicate code by running the library as a lambda layer
 * Use the same interface than the Service team to be able to lift the same code as Managed Rule
+
+REMARK: RDK is set to use a rdklib layer provided by AWS for python*-lib runtime.
+        If you would like the layer to be deployed and used in your account, please read the Deployment session.
 
 ## Getting Started
 
 ### Install the library locally
 ```
-pip install RDKLib/
+pip install ./
 ```
 
 ### Create a rule using the RDK template 
@@ -22,6 +27,23 @@ For scheduled
 ```
 rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types YOUR_RESOURCE_TYPE
 ```
+
+### Deployment
+RDKLib is deployed as a lambda layer and user can attach it to the custom rule lambda.
+
+There are different ways to create the library and integrate with RDK.
+
+* By default, if the runtime of your RDK rule is set to python*-lib, it is set to use a lambda layer created by AWS.
+* To deploy and use the layer in your account:
+    1. Go to AWS Severless Application Repository in console,
+        -> Available applications
+        -> Public applications
+        -> search rdklib
+        -> deploy the layer
+       This will create the rdklib lambda layer in your account.
+    2. For deployment,
+        -> add --rdklib-layer-arn $RDKLIB_LAYER_ARN in your "rdk deploy" command.
+       This will execute the deployment or create the deployment templates with the custom rule lambda function attached with the layer.
 
 ## Dev Guide
 
