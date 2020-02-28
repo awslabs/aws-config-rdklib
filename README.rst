@@ -101,7 +101,6 @@ Dev Guide
     The input parameters of the Config Rule.
   
   **Return Syntax**
-  
     If one of the parameters is invalid, raise an InvalidParametersError error.
   
     .. code-block:: python
