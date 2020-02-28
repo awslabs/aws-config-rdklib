@@ -83,6 +83,7 @@ Dev Guide
         service='string')
 
   **Parameter**
+
   + **service** *(string)* -- **[REQUIRED]**
     The boto3 name of the AWS service
     
