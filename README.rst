@@ -86,7 +86,7 @@ Create or reuse a boto3 client. It minimizes the number of STS calls by reusing 
 
 **Parameter**
 
-* **service** *(string)* -- [REQUIRED]
++ **service** *(string)* -- [REQUIRED]
     The boto3 name of the AWS service
     
 *class* **ConfigRule**
