@@ -18,8 +18,8 @@ Install the library locally
 
     pip install git+https://github.com/awslabs/aws-config-rdklib
 
-Create a rule using the RDK template 
-------------------------------------
+Create a rule using the RDK 
+---------------------------
 
 The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provide you the Rule template.
 
@@ -37,12 +37,12 @@ For configuration change trigger (for example S3 Bucket)
 
 Note: you need to install the RDK (see https://github.com/awslabs/aws-config-rdk#getting-started)
 
-Deployment
-----------
+Deploy your rule with RDKlib layer
+----------------------------------
 
 RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
 
-#. Install RDKlib layer (with AWS CLI)
+1. Install RDKlib layer (with AWS CLI)
 
 ::
 
@@ -57,7 +57,7 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
 Note: You can do the same step manually going to `https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps
 <https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps>`_ and find "rdklib"
 
-#. Deploy the rule
+2. Deploy the rule
 
 ::
 
