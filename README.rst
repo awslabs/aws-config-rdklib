@@ -122,15 +122,15 @@ Dev Guide
   
     Lambda event provided by Config.
   
-  + **client_factory** (*ClientFactory*)
+  + **client_factory** *(ClientFactory)*
   
     *ClientFactory* object to be used in this rule.
   
-  + **configuration_item** (*dict*)
+  + **configuration_item** *(dict)*
   
     The full configuration Item, even if oversized.
   
-  + **valid_rule_parameters** (*dict*)
+  + **valid_rule_parameters** *(dict)*
   
     The output of the evaluate_parameters() method.
   
@@ -153,11 +153,11 @@ Dev Guide
   
     Lambda event provided by Config.
   
-  + **client_factory** (*ClientFactory*)
+  + **client_factory** *(ClientFactory)*
   
     *ClientFactory* object to be used in this rule.
   
-  + **valid_rule_parameters** (*dict*)
+  + **valid_rule_parameters** *(dict)*
   
     The output of the evaluate_parameters() method.
   
@@ -187,16 +187,20 @@ Class for the *Evaluation* object.
 
 **Parameter**
 
-* **complianceType** (*ComplianceType*) [REQUIRED]
+* **complianceType** *(ComplianceType)* [REQUIRED]
+
   Compliance type of the evaluation.
 
-* **complianceResourceId** (*string*) [OPTIONAL]
+* **complianceResourceId** *(string)* [OPTIONAL]
+
   ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
-* **annotation** (*string*) [OPTIONAL]
+* **annotation** *(string)* [OPTIONAL]
+
   Annotation for the evaluation. It gets shorten to 255 characters automatically.
 
-* **complianceResourceType** (*string*) [OPTIONAL]
+* **complianceResourceType** *(string)* [OPTIONAL]
+
   ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
 *class* **ComplianceType**
