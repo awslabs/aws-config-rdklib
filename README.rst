@@ -23,12 +23,14 @@ Create a rule using the RDK template
 
 The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provide you the Rule template.
 
-For periodic:
+For periodic trigger:
+
 ::
 
     rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
 
-For scheduled (for example S3 Bucket)
+For configuration change trigger (for example S3 Bucket)
+
 ::
 
     rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types AWS::S3::Bucket
@@ -40,7 +42,7 @@ Deployment
 
 RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
 
-* Install RDKlib layer (with AWS CLI)
+#. Install RDKlib layer (with AWS CLI)
 
 ::
 
@@ -55,7 +57,7 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
 Note: You can do the same step manually going to `https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps
 <https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps>`_ and find "rdklib"
 
-* Deploy the rule
+#. Deploy the rule
 
 ::
 
