@@ -92,29 +92,27 @@ Dev Guide
 ----------------------
 
 *method* **evaluate_parameters()**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    Used to analyze the validity of the input parameters of the Config Rule.
+  Used to analyze the validity of the input parameters of the Config Rule.
+  
+  **Parameter**
+  
+  + **rule_parameters** *(dict)*
+  
+    The input parameters of the Config Rule.
+  
+  **Return Syntax**
+  
+    If one of the parameters is invalid, raise an InvalidParametersError error.
+  
+    .. code-block:: python
     
-    **Parameter**
+        raise InvalidParametersError("Error message to display")
+  
+    If the parameters are all valid, return a dict.
+  
+    .. code-block:: python
     
-    * **rule_parameters** (*dict*)
-    
-        The input parameters of the Config Rule.
-    
-    **Return Syntax**
-    
-        If one of the parameters is invalid, raise an InvalidParametersError error.
-    
-        .. code-block:: python
-        
-            raise InvalidParametersError("Error message to display")
-    
-        If the parameters are all valid, return a dict.
-    
-        .. code-block:: python
-        
-            return valid_rule_parameters
+        return valid_rule_parameters
 
 *method* **evaluate_change()**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
