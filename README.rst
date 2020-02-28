@@ -97,7 +97,7 @@ Dev Guide
   **Parameter**
   
   + **rule_parameters** *(dict)*
-  
+
     The input parameters of the Config Rule.
   
   **Return Syntax**
@@ -114,67 +114,61 @@ Dev Guide
         return valid_rule_parameters
 
 *method* **evaluate_change()**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Used to evaluate Configuration Change triggered rule.
-
-**Parameter**
-
-* **event**
-
-Lambda event provided by Config.
-
-* **client_factory** (*ClientFactory*)
-
-*ClientFactory* object to be used in this rule.
-
-* **configuration_item** (*dict*)
-
-The full configuration Item, even if oversized.
-
-* **valid_rule_parameters** (*dict*)
-
-The output of the evaluate_parameters() method.
-
-**Return Syntax**
-
-Return an list of *Evaluation* object(s). 
-
-.. code-block:: python
-
-    return [Evaluation()]
-
-It can be an empty list, if no evaluation.
+  Used to evaluate Configuration Change triggered rule.
+  
+  **Parameter**
+  
+  * **event**
+  
+    Lambda event provided by Config.
+  
+  * **client_factory** (*ClientFactory*)
+  
+    *ClientFactory* object to be used in this rule.
+  
+  * **configuration_item** (*dict*)
+  
+    The full configuration Item, even if oversized.
+  
+  * **valid_rule_parameters** (*dict*)
+  
+    The output of the evaluate_parameters() method.
+  
+  **Return Syntax**
+    Return an list of *Evaluation* object(s). 
+  
+    .. code-block:: python
+    
+        return [Evaluation()]
+  
+    It can be an empty list, if no evaluation.
 
 
 *method* **evaluate_periodic()**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Used to evaluate Periodic triggered rule.
-
-**Parameter**
-
-* **event**
-
-Lambda event provided by Config.
-
-* **client_factory** (*ClientFactory*)
-
-*ClientFactory* object to be used in this rule.
-
-* **valid_rule_parameters** (*dict*)
-
-The output of the evaluate_parameters() method.
-
-**Return Syntax**
-
-Return an list of *Evaluation* object(s). 
-
-.. code-block:: python
-
-    return [Evaluation()]
-
-It can be an empty list, if no evaluation.
+  Used to evaluate Periodic triggered rule.
+  
+  **Parameter**
+  
+  + **event**
+  
+    Lambda event provided by Config.
+  
+  + **client_factory** (*ClientFactory*)
+  
+    *ClientFactory* object to be used in this rule.
+  
+  + **valid_rule_parameters** (*dict*)
+  
+    The output of the evaluate_parameters() method.
+  
+  **Return Syntax**
+    Return an list of *Evaluation* object(s). 
+  
+    .. code-block:: python
+    
+        return [Evaluation()]
+    
+    It can be an empty list, if no evaluation.
 
 *class* **Evaluation**
 ----------------------
