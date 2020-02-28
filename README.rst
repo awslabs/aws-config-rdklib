@@ -188,16 +188,16 @@ Class for the *Evaluation* object.
 **Parameter**
 
 * **complianceType** (*ComplianceType*) [REQUIRED]
-Compliance type of the evaluation.
+  Compliance type of the evaluation.
 
 * **complianceResourceId** (*string*) [OPTIONAL]
-ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+  ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
 * **annotation** (*string*) [OPTIONAL]
-Annotation for the evaluation. It gets shorten to 255 characters automatically.
+  Annotation for the evaluation. It gets shorten to 255 characters automatically.
 
 * **complianceResourceType** (*string*) [OPTIONAL]
-ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+  ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
 *class* **ComplianceType**
 --------------------------
