@@ -86,8 +86,7 @@ Dev Guide
   
   **Parameter**
   
-  * **service** (*string*) [REQUIRED]
-  
+  * **service** *(string)* -- [REQUIRED]
       The boto3 name of the AWS service
     
 *class* **ConfigRule**
