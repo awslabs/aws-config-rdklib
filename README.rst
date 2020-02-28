@@ -108,6 +108,7 @@ If the parameters are all valid, return a dict.
 Used to evaluate Configuration Change triggered rule.
 
 **Parameter**
+
 * **event**
 
 Lambda event provided by Config.
@@ -167,7 +168,8 @@ Class for the *Evaluation* object.
 
 **Request Syntax**
 
-::
+.. code-block:: python
+
     evaluation = Evaluation(
         complianceType='ComplianceType',
         complianceResourceId='string',
