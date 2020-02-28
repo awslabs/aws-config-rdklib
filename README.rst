@@ -13,6 +13,7 @@ Getting Started
 
 Install the library locally
 ---------------------------
+
 ::
     pip install git+https://github.com/awslabs/aws-config-rdklib
 
@@ -37,6 +38,7 @@ Deployment
 RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
 
 * Install RDKlib layer (with AWS CLI)
+
 ::
     aws serverlessrepo create-cloud-formation-change-set --application-id arn:aws:serverlessrepo:ap-southeast-1:711761543063:applications/rdklib --stack-name RDKlib-Layer
     
@@ -49,6 +51,7 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
 Note: You can do the same step manually going to https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps and find "rdklib"
 
 * Deploy the rule
+
 ::
     rdk deploy YOUR_RULE_NAME --rdklib-layer-arn YOUR_RDKLIB_LAYER_ARN
 
@@ -64,12 +67,13 @@ Dev Guide
 Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
 
 **Request Syntax**
-```
-response = client_factory.build_client(
-    service='string')
-```
+
+::
+    response = client_factory.build_client(
+        service='string')
 
 **Parameter**
+
 * **service** (*string*) [REQUIRED]
 
 The boto3 name of the AWS service
@@ -83,21 +87,20 @@ The boto3 name of the AWS service
 Used to analyze the validity of the input parameters of the Config Rule.
 
 **Parameter**
+
 * **rule_parameters** (*dict*)
 
-The input parameters  of the Config Rule.
+The input parameters of the Config Rule.
 
 **Return Syntax**
 
 If one of the parameters is invalid, raise an InvalidParametersError error.
-```
-raise InvalidParametersError("Error message to display")
-```
+::
+    raise InvalidParametersError("Error message to display")
 
 If the parameters are all valid, return a dict.
-```
-return valid_rule_parameters
-```
+::
+    return valid_rule_parameters
 
 *method* **evaluate_change()**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -124,9 +127,9 @@ The output of the evaluate_parameters() method.
 **Return Syntax**
 
 Return an list of *Evaluation* object(s). 
-```
-return [Evaluation()]
-```
+::
+    return [Evaluation()]
+
 It can be an empty list, if no evaluation.
 
 
@@ -136,6 +139,7 @@ It can be an empty list, if no evaluation.
 Used to evaluate Periodic triggered rule.
 
 **Parameter**
+
 * **event**
 
 Lambda event provided by Config.
@@ -162,13 +166,13 @@ It can be an empty list, if no evaluation.
 Class for the *Evaluation* object.
 
 **Request Syntax**
-```
-evaluation = Evaluation(
-    complianceType='ComplianceType',
-    complianceResourceId='string',
-    annotation='string',
-    complianceResourceType='string')
-```
+
+::
+    evaluation = Evaluation(
+        complianceType='ComplianceType',
+        complianceResourceId='string',
+        annotation='string',
+        complianceResourceType='string')
 
 **Parameter**
 
@@ -192,19 +196,17 @@ Class for the *ComplianceType* object.
 **Request Syntax**
 
 Evaluation will display as "Compliant"
-```
-compliance_type = ComplianceType.COMPLIANT 
-```
+::
+    compliance_type = ComplianceType.COMPLIANT
+
 
 Evaluation will display as "Non Compliant"
-```
-compliance_type = ComplianceType.NON_COMPLIANT 
-```
+::
+compliance_type = ComplianceType.NON_COMPLIANT
 
 Evaluation will not display:
-```
-compliance_type = ComplianceType.NOT_APPLICABLE 
-```
+::
+    compliance_type = ComplianceType.NOT_APPLICABLE
 
 License
 =======
@@ -218,8 +220,8 @@ Feel free to email rdk-maintainers@amazon.com
 
 Authors
 =======
-* **Jonathan Rault** - *Design, code, testing, feedback*
 * **Michael Borchert** - *Design, code, testing, feedback*
+* **Jonathan Rault** - *Design, code, testing, feedback*
 * **Joe Lee** - *Design, feedback*
 * **Chris Gutierrez** - *Design, feedback*
 * **Ricky Chau** - *Current Maintainer*
