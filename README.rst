@@ -64,43 +64,48 @@ Dev Guide
 *method* **build_client()**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
+    Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
 
-**Request Syntax**
+    **Request Syntax**
 
-::
-    response = client_factory.build_client(
-        service='string')
-
-**Parameter**
-
-* **service** (*string*) [REQUIRED]
-
-The boto3 name of the AWS service
-
+    .. code-block:: python
+    
+        response = client_factory.build_client(
+            service='string')
+    
+    **Parameter**
+    
+    * **service** (*string*) [REQUIRED]
+    
+        The boto3 name of the AWS service
+    
 *class* **ConfigRule**
 ----------------------
 
 *method* **evaluate_parameters()**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Used to analyze the validity of the input parameters of the Config Rule.
-
-**Parameter**
-
-* **rule_parameters** (*dict*)
-
-The input parameters of the Config Rule.
-
-**Return Syntax**
-
-If one of the parameters is invalid, raise an InvalidParametersError error.
-::
-    raise InvalidParametersError("Error message to display")
-
-If the parameters are all valid, return a dict.
-::
-    return valid_rule_parameters
+    Used to analyze the validity of the input parameters of the Config Rule.
+    
+    **Parameter**
+    
+    * **rule_parameters** (*dict*)
+    
+        The input parameters of the Config Rule.
+    
+    **Return Syntax**
+    
+        If one of the parameters is invalid, raise an InvalidParametersError error.
+    
+        .. code-block:: python
+        
+            raise InvalidParametersError("Error message to display")
+    
+        If the parameters are all valid, return a dict.
+    
+        .. code-block:: python
+        
+            return valid_rule_parameters
 
 *method* **evaluate_change()**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -128,7 +133,9 @@ The output of the evaluate_parameters() method.
 **Return Syntax**
 
 Return an list of *Evaluation* object(s). 
-::
+
+.. code-block:: python
+
     return [Evaluation()]
 
 It can be an empty list, if no evaluation.
@@ -156,9 +163,11 @@ The output of the evaluate_parameters() method.
 **Return Syntax**
 
 Return an list of *Evaluation* object(s). 
-```
-return [Evaluation()]
-```
+
+.. code-block:: python
+
+    return [Evaluation()]
+
 It can be an empty list, if no evaluation.
 
 *class* **Evaluation**
@@ -198,16 +207,22 @@ Class for the *ComplianceType* object.
 **Request Syntax**
 
 Evaluation will display as "Compliant"
-::
+
+.. code-block:: python
+
     compliance_type = ComplianceType.COMPLIANT
 
 
 Evaluation will display as "Non Compliant"
-::
-compliance_type = ComplianceType.NON_COMPLIANT
+
+.. code-block:: python
+
+    compliance_type = ComplianceType.NON_COMPLIANT
 
 Evaluation will not display:
-::
+
+.. code-block:: python
+
     compliance_type = ComplianceType.NOT_APPLICABLE
 
 License
