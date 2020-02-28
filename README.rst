@@ -116,21 +116,21 @@ Dev Guide
 *method* **evaluate_change()**
   Used to evaluate Configuration Change triggered rule.
   
-  **Parameter**
+  **Parameters**
   
-  * **event**
+  + **event**
   
     Lambda event provided by Config.
   
-  * **client_factory** (*ClientFactory*)
+  + **client_factory** (*ClientFactory*)
   
     *ClientFactory* object to be used in this rule.
   
-  * **configuration_item** (*dict*)
+  + **configuration_item** (*dict*)
   
     The full configuration Item, even if oversized.
   
-  * **valid_rule_parameters** (*dict*)
+  + **valid_rule_parameters** (*dict*)
   
     The output of the evaluate_parameters() method.
   
@@ -147,7 +147,7 @@ Dev Guide
 *method* **evaluate_periodic()**
   Used to evaluate Periodic triggered rule.
   
-  **Parameter**
+  **Parameters**
   
   + **event**
   
