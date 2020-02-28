@@ -15,6 +15,7 @@ Install the library locally
 ---------------------------
 
 ::
+
     pip install git+https://github.com/awslabs/aws-config-rdklib
 
 Create a rule using the RDK template 
@@ -24,10 +25,12 @@ The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provi
 
 For periodic:
 ::
+
     rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
 
 For scheduled (for example S3 Bucket)
 ::
+
     rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types AWS::S3::Bucket
 
 Note: you need to install the RDK (see https://github.com/awslabs/aws-config-rdk#getting-started)
@@ -40,6 +43,7 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
 * Install RDKlib layer (with AWS CLI)
 
 ::
+
     aws serverlessrepo create-cloud-formation-change-set --application-id arn:aws:serverlessrepo:ap-southeast-1:711761543063:applications/rdklib --stack-name RDKlib-Layer
     
     # Copy/paste the full change-set ARN to customize the following command
@@ -53,6 +57,7 @@ Note: You can do the same step manually going to https://console.aws.amazon.com/
 * Deploy the rule
 
 ::
+
     rdk deploy YOUR_RULE_NAME --rdklib-layer-arn YOUR_RDKLIB_LAYER_ARN
 
 Dev Guide
