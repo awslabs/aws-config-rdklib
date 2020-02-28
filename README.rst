@@ -58,7 +58,7 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
 
 ..
 
-    Note: You can do the same step manually going to `https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps<https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps>`_ and find "rdklib"
+    Note: You can do the same step manually going to `https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps <https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps>`_ and find "rdklib"
 
 2. Deploy the rule
 
