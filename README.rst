@@ -1,55 +1,65 @@
-# rdklib
+rdklib
+======
 
-This is a library for Rules Development Kit (https://github.com/awslabs/aws-config-rdk)
+This is a library to enhance your usage of AWS Config Rules. It works in synergy with the AWS Config Rule Development Kit (https://github.com/awslabs/aws-config-rdk).
 
-A library for writing custom Rules that:
-* Remove the duplicate code by running the library as a lambda layer
-* Use the same interface than the Service team to be able to lift the same code as Managed Rule
+The library enables you to run custom Rules at scale by:
+* Helping to focus only on the compliance logic, by doing heavy lifting tasks with the library methods
+* Easing maintenance by moving the boilerplate code as a lambda layer
+* Providing transparency on the Managed Rules logic as the Service team uses the same library interfaces for their code
 
-REMARK: RDK is set to use a rdklib layer provided by AWS for python*-lib runtime.
-        If you would like the layer to be deployed and used in your account, please read the Deployment session.
+Getting Started
+===============
 
-## Getting Started
+Install the library locally
+---------------------------
+::
+    pip install git+https://github.com/awslabs/aws-config-rdklib
 
-### Install the library locally
-```
-pip install ./
-```
+Create a rule using the RDK template 
+------------------------------------
 
-### Create a rule using the RDK template 
+The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provide you the Rule template.
 
 For periodic:
-```
-rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
-```
+::
+    rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
 
-For scheduled
-```
-rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types YOUR_RESOURCE_TYPE
-```
+For scheduled (for example S3 Bucket)
+::
+    rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types AWS::S3::Bucket
 
-### Deployment
-RDKLib is deployed as a lambda layer and user can attach it to the custom rule lambda.
+Note: you need to install the RDK (see https://github.com/awslabs/aws-config-rdk#getting-started)
 
-There are different ways to create the library and integrate with RDK.
+Deployment
+----------
 
-* By default, if the runtime of your RDK rule is set to python*-lib, it is set to use a lambda layer created by AWS.
-* To deploy and use the layer in your account:
-    1. Go to AWS Severless Application Repository in console,
-        -> Available applications
-        -> Public applications
-        -> search rdklib
-        -> deploy the layer
-       This will create the rdklib lambda layer in your account.
-    2. For deployment,
-        -> add --rdklib-layer-arn $RDKLIB_LAYER_ARN in your "rdk deploy" command.
-       This will execute the deployment or create the deployment templates with the custom rule lambda function attached with the layer.
+RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
 
-## Dev Guide
+* Install RDKlib layer (with AWS CLI)
+::
+    aws serverlessrepo create-cloud-formation-change-set --application-id arn:aws:serverlessrepo:ap-southeast-1:711761543063:applications/rdklib --stack-name RDKlib-Layer
+    
+    # Copy/paste the full change-set ARN to customize the following command
+    aws cloudformation execute-change-set --change-set-name NAME_OF_THE_CHANGE_SET
 
-### *class* **ClientFactory**
+    aws cloudformation describe-stack-resources --stack-name serverlessrepo-RDKlib-Layer
+    # Copy the ARN of the Lambda layer in the "PhysicalResourceId" key (i.e. arn:aws:lambda:YOUR_REGION:YOUR_ACCOUNT:layer:rdklib-layer:1).
 
-#### *method* **build_client()**
+Note: You can do the same step manually going to https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps and find "rdklib"
+
+* Deploy the rule
+::
+    rdk deploy YOUR_RULE_NAME --rdklib-layer-arn YOUR_RDKLIB_LAYER_ARN
+
+Dev Guide
+=========
+
+*class* **ClientFactory**
+-------------------------
+
+*method* **build_client()**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
 
@@ -62,11 +72,13 @@ response = client_factory.build_client(
 **Parameter**
 * **service** (*string*) [REQUIRED]
 
-The name of the AWS service as boto3 
+The boto3 name of the AWS service
 
-### *class* **ConfigRule**
+*class* **ConfigRule**
+----------------------
 
-#### *method* **evaluate_parameters()**
+*method* **evaluate_parameters()**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Used to analyze the validity of the input parameters of the Config Rule.
 
@@ -87,7 +99,8 @@ If the parameters are all valid, return a dict.
 return valid_rule_parameters
 ```
 
-#### *method* **evaluate_change()**
+*method* **evaluate_change()**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Used to evaluate Configuration Change triggered rule.
 
@@ -117,7 +130,8 @@ return [Evaluation()]
 It can be an empty list, if no evaluation.
 
 
-#### *method* **evaluate_periodic()**
+*method* **evaluate_periodic()**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Used to evaluate Periodic triggered rule.
 
@@ -142,7 +156,8 @@ return [Evaluation()]
 ```
 It can be an empty list, if no evaluation.
 
-### *class* **Evaluation**
+*class* **Evaluation**
+----------------------
 
 Class for the *Evaluation* object.
 
@@ -169,7 +184,8 @@ Annotation for the evaluation. It gets shorten to 255 characters automatically.
 * **complianceResourceType** (*string*) [OPTIONAL]
 ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
-### *class* **ComplianceType**
+*class* **ComplianceType**
+--------------------------
 
 Class for the *ComplianceType* object.
 
@@ -190,8 +206,21 @@ Evaluation will not display:
 compliance_type = ComplianceType.NOT_APPLICABLE 
 ```
 
-
-## License
+License
+=======
 
 This project is licensed under the Apache-2.0 License.
 
+Feedback / Questions
+====================
+
+Feel free to email rdk-maintainers@amazon.com
+
+Authors
+=======
+* **Jonathan Rault** - *Design, code, testing, feedback*
+* **Michael Borchert** - *Design, code, testing, feedback*
+* **Joe Lee** - *Design, feedback*
+* **Chris Gutierrez** - *Design, feedback*
+* **Ricky Chau** - *Current Maintainer*
+* **Santosh Kumar** - *Current Maintainer*
