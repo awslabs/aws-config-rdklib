@@ -74,7 +74,6 @@ Dev Guide
 
 *method* **build_client()**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
 
   **Request Syntax**
