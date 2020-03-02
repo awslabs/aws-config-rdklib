@@ -1,4 +1,4 @@
-rdklib
+RDKlib
 ======
 
 This is a library to enhance your usage of AWS Config Rules. It works in synergy with the AWS Config Rule Development Kit (https://github.com/awslabs/aws-config-rdk).
