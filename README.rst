@@ -241,7 +241,7 @@ Feel free to email rdk-maintainers@amazon.com
 
 Authors
 =======
-* **Jonathan Rault** - *Maintainer, Design, code, testing, feedback*
+* **Jonathan Rault** - *Maintainer, design, code, testing, feedback*
 * **Ricky Chau** - *Maintainer, code, testing*
 * **Michael Borchert** - *Design, code, testing, feedback*
 * **Joe Lee** - *Design, feedback*
