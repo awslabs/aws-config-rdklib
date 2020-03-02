@@ -3,7 +3,7 @@ RDKlib
 
 RDKlib is a Python library to enable you to **run custom AWS Config Rules at scale**. The library can be used to:
 
-+ Help you to focus only on the compliance logic, by doing heavy lifting tasks with the library
++ Help you to focus only on the compliance logic, while the library does the heavy lifting
 + Ease maintenance by moving the boilerplate code as a AWS Lambda Layer
 + Ease deployment by using AWS Serverless Application Repository
 
