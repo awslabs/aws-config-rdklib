@@ -1,197 +1,248 @@
-# rdklib
+RDKlib
+======
 
-This is a library for Rules Development Kit (https://github.com/awslabs/aws-config-rdk)
+RDKlib is a Python library to enable you to **run custom AWS Config Rules at scale**. The library can be use to:
 
-A library for writing custom Rules that:
-* Remove the duplicate code by running the library as a lambda layer
-* Use the same interface than the Service team to be able to lift the same code as Managed Rule
++ Help you to focus only on the compliance logic, by doing heavy lifting tasks with the library
++ Ease maintenance by moving the boilerplate code as a lambda layer
 
-REMARK: RDK is set to use a rdklib layer provided by AWS for python*-lib runtime.
-        If you would like the layer to be deployed and used in your account, please read the Deployment session.
+RDKLib works in synergy with the AWS Config Rule Development Kit (https://github.com/awslabs/aws-config-rdk).
 
-## Getting Started
+Getting Started
+===============
 
-### Install the library locally
-```
-pip install ./
-```
+Install the library locally
+---------------------------
 
-### Create a rule using the RDK template 
+::
 
-For periodic:
-```
-rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
-```
+    pip install git+https://github.com/awslabs/aws-config-rdklib
 
-For scheduled
-```
-rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types YOUR_RESOURCE_TYPE
-```
+Create a rule using the RDK 
+---------------------------
 
-### Deployment
-RDKLib is deployed as a lambda layer and user can attach it to the custom rule lambda.
+The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provide you the Rule template.
 
-There are different ways to create the library and integrate with RDK.
+* For periodic trigger:
 
-* By default, if the runtime of your RDK rule is set to python*-lib, it is set to use a lambda layer created by AWS.
-* To deploy and use the layer in your account:
-    1. Go to AWS Severless Application Repository in console,
-        -> Available applications
-        -> Public applications
-        -> search rdklib
-        -> deploy the layer
-       This will create the rdklib lambda layer in your account.
-    2. For deployment,
-        -> add --rdklib-layer-arn $RDKLIB_LAYER_ARN in your "rdk deploy" command.
-       This will execute the deployment or create the deployment templates with the custom rule lambda function attached with the layer.
+::
 
-## Dev Guide
+    rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
 
-### *class* **ClientFactory**
+* For configuration change trigger (for example S3 Bucket)
 
-#### *method* **build_client()**
+::
 
-Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
+    rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types AWS::S3::Bucket
 
-**Request Syntax**
-```
-response = client_factory.build_client(
-    service='string')
-```
+..
 
-**Parameter**
-* **service** (*string*) [REQUIRED]
+    Note: you need to install the RDK (see https://github.com/awslabs/aws-config-rdk#getting-started)
 
-The name of the AWS service as boto3 
+Deploy your rule with RDKlib layer
+----------------------------------
 
-### *class* **ConfigRule**
+RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
 
-#### *method* **evaluate_parameters()**
+1. Install RDKlib layer (with AWS CLI)
 
-Used to analyze the validity of the input parameters of the Config Rule.
+::
 
-**Parameter**
-* **rule_parameters** (*dict*)
+    aws serverlessrepo create-cloud-formation-change-set --application-id arn:aws:serverlessrepo:ap-southeast-1:711761543063:applications/rdklib --stack-name RDKlib-Layer
+    
+    # Copy/paste the full change-set ARN to customize the following command
+    aws cloudformation execute-change-set --change-set-name NAME_OF_THE_CHANGE_SET
 
-The input parameters  of the Config Rule.
+    aws cloudformation describe-stack-resources --stack-name serverlessrepo-RDKlib-Layer
+    # Copy the ARN of the Lambda layer in the "PhysicalResourceId" key (i.e. arn:aws:lambda:YOUR_REGION:YOUR_ACCOUNT:layer:rdklib-layer:1).
 
-**Return Syntax**
+..
 
-If one of the parameters is invalid, raise an InvalidParametersError error.
-```
-raise InvalidParametersError("Error message to display")
-```
+    Note: You can do the same step manually going to `https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps <https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps>`_ and find "rdklib"
 
-If the parameters are all valid, return a dict.
-```
-return valid_rule_parameters
-```
+2. Deploy the rule
 
-#### *method* **evaluate_change()**
+::
 
-Used to evaluate Configuration Change triggered rule.
+    rdk deploy YOUR_RULE_NAME --rdklib-layer-arn YOUR_RDKLIB_LAYER_ARN
 
-**Parameter**
-* **event**
+Dev Guide
+=========
 
-Lambda event provided by Config.
+*class* **ClientFactory**
+-------------------------
 
-* **client_factory** (*ClientFactory*)
+*method* **build_client()**
+  Create or reuse a boto3 client. It minimizes the number of STS calls by reusing existing client, if already available.
 
-*ClientFactory* object to be used in this rule.
+  **Request Syntax**
 
-* **configuration_item** (*dict*)
+  .. code-block:: python
 
-The full configuration Item, even if oversized.
+    response = client_factory.build_client(
+        service='string')
 
-* **valid_rule_parameters** (*dict*)
+  **Parameter**
 
-The output of the evaluate_parameters() method.
+  + **service** *(string)* -- **[REQUIRED]**
+  
+    The boto3 name of the AWS service
+    
+*class* **ConfigRule**
+----------------------
 
-**Return Syntax**
+*method* **evaluate_parameters()**
+  Used to analyze the validity of the input parameters of the Config Rule.
+  
+  **Parameter**
+  
+  + **rule_parameters** *(dict)*
 
-Return an list of *Evaluation* object(s). 
-```
-return [Evaluation()]
-```
-It can be an empty list, if no evaluation.
+    The input parameters of the Config Rule.
+  
+  **Return Syntax**
+    If one of the parameters is invalid, raise an InvalidParametersError error.
+  
+    .. code-block:: python
+    
+        raise InvalidParametersError("Error message to display")
+  
+    If the parameters are all valid, return a dict.
+  
+    .. code-block:: python
+    
+        return valid_rule_parameters
+
+*method* **evaluate_change()**
+  Used to evaluate Configuration Change triggered rule.
+  
+  **Parameters**
+  
+  + **event**
+  
+    Lambda event provided by Config.
+  
+  + **client_factory** *(ClientFactory)*
+  
+    *ClientFactory* object to be used in this rule.
+  
+  + **configuration_item** *(dict)*
+  
+    The full configuration Item, even if oversized.
+  
+  + **valid_rule_parameters** *(dict)*
+  
+    The output of the evaluate_parameters() method.
+  
+  **Return Syntax**
+    Return an list of *Evaluation* object(s). 
+  
+    .. code-block:: python
+    
+        return [Evaluation()]
+  
+    It can be an empty list, if no evaluation.
 
 
-#### *method* **evaluate_periodic()**
+*method* **evaluate_periodic()**
+  Used to evaluate Periodic triggered rule.
+  
+  **Parameters**
+  
+  + **event**
+  
+    Lambda event provided by Config.
+  
+  + **client_factory** *(ClientFactory)*
+  
+    *ClientFactory* object to be used in this rule.
+  
+  + **valid_rule_parameters** *(dict)*
+  
+    The output of the evaluate_parameters() method.
+  
+  **Return Syntax**
+    Return an list of *Evaluation* object(s). 
+  
+    .. code-block:: python
+    
+        return [Evaluation()]
+    
+    It can be an empty list, if no evaluation.
 
-Used to evaluate Periodic triggered rule.
-
-**Parameter**
-* **event**
-
-Lambda event provided by Config.
-
-* **client_factory** (*ClientFactory*)
-
-*ClientFactory* object to be used in this rule.
-
-* **valid_rule_parameters** (*dict*)
-
-The output of the evaluate_parameters() method.
-
-**Return Syntax**
-
-Return an list of *Evaluation* object(s). 
-```
-return [Evaluation()]
-```
-It can be an empty list, if no evaluation.
-
-### *class* **Evaluation**
+*class* **Evaluation**
+----------------------
 
 Class for the *Evaluation* object.
 
 **Request Syntax**
-```
-evaluation = Evaluation(
-    complianceType='ComplianceType',
-    complianceResourceId='string',
-    annotation='string',
-    complianceResourceType='string')
-```
+
+.. code-block:: python
+
+    evaluation = Evaluation(
+        complianceType='ComplianceType',
+        complianceResourceId='string',
+        annotation='string',
+        complianceResourceType='string')
 
 **Parameter**
 
-* **complianceType** (*ComplianceType*) [REQUIRED]
-Compliance type of the evaluation.
+* **complianceType** *(ComplianceType)* [REQUIRED]
 
-* **complianceResourceId** (*string*) [OPTIONAL]
-ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+  Compliance type of the evaluation.
 
-* **annotation** (*string*) [OPTIONAL]
-Annotation for the evaluation. It gets shorten to 255 characters automatically.
+* **complianceResourceId** *(string)* [OPTIONAL]
 
-* **complianceResourceType** (*string*) [OPTIONAL]
-ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+  ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
-### *class* **ComplianceType**
+* **annotation** *(string)* [OPTIONAL]
+
+  Annotation for the evaluation. It gets shorten to 255 characters automatically.
+
+* **complianceResourceType** *(string)* [OPTIONAL]
+
+  ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+
+*class* **ComplianceType**
+--------------------------
 
 Class for the *ComplianceType* object.
 
 **Request Syntax**
 
 Evaluation will display as "Compliant"
-```
-compliance_type = ComplianceType.COMPLIANT 
-```
+
+.. code-block:: python
+
+    compliance_type = ComplianceType.COMPLIANT
+
 
 Evaluation will display as "Non Compliant"
-```
-compliance_type = ComplianceType.NON_COMPLIANT 
-```
+
+.. code-block:: python
+
+    compliance_type = ComplianceType.NON_COMPLIANT
 
 Evaluation will not display:
-```
-compliance_type = ComplianceType.NOT_APPLICABLE 
-```
 
+.. code-block:: python
 
-## License
+    compliance_type = ComplianceType.NOT_APPLICABLE
+
+License
+=======
 
 This project is licensed under the Apache-2.0 License.
 
+Feedback / Questions
+====================
+
+Feel free to email rdk-maintainers@amazon.com
+
+Authors
+=======
+* **Jonathan Rault** - *Maintainer, design, code, testing, feedback*
+* **Ricky Chau** - *Maintainer, code, testing*
+* **Michael Borchert** - *Design, code, testing, feedback*
+* **Joe Lee** - *Design, feedback*
+* **Chris Gutierrez** - *Design, feedback*
