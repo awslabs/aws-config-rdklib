@@ -24,9 +24,9 @@ class rdklibEvaluationTest(unittest.TestCase):
     def test_compliance_type(self):
 
         # Valid value
-        self.assertTrue(CODE.ComplianceType.NOT_APPLICABLE == "NOT_APPLICABLE" )
-        self.assertTrue(CODE.ComplianceType.COMPLIANT == "COMPLIANT" )
-        self.assertTrue(CODE.ComplianceType.NON_COMPLIANT == "NON_COMPLIANT" )
+        self.assertTrue(CODE.ComplianceType.get_name(CODE.ComplianceType.NOT_APPLICABLE) == "NOT_APPLICABLE" )
+        self.assertTrue(CODE.ComplianceType.get_name(CODE.ComplianceType.COMPLIANT) == "COMPLIANT" )
+        self.assertTrue(CODE.ComplianceType.get_name(CODE.ComplianceType.NON_COMPLIANT) == "NON_COMPLIANT" )
 
         # Invalid value
         with self.assertRaises(AttributeError) as context:
@@ -40,9 +40,16 @@ class rdklibEvaluationTest(unittest.TestCase):
             evaluation = CODE.Evaluation()
         self.assertTrue("__init__()" in str(context.exception))
 
-        # Invalid argument Error
+        # Invalid int argument Error
         with self.assertRaises(Exception) as context:
-            evaluation = CODE.Evaluation('string')
+            evaluation = CODE.Evaluation(4)
+        print(str(context.exception))
+        self.assertTrue('The complianceType is not valid. Valid values include: ComplianceType.COMPLIANT, ComplianceType.COMPLIANT and ComplianceType.NOT_APPLICABLE' in str(context.exception))
+        
+        # Invalid str string Error
+        with self.assertRaises(Exception) as context:
+            evaluation = CODE.Evaluation("string")
+        print(str(context.exception))
         self.assertTrue('The complianceType is not valid. Valid values include: ComplianceType.COMPLIANT, ComplianceType.COMPLIANT and ComplianceType.NOT_APPLICABLE' in str(context.exception))
 
         # Default value
