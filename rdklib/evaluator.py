@@ -1,4 +1,4 @@
-# Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You may
 # not use this file except in compliance with the License. A copy of the License is located at
@@ -20,14 +20,15 @@ from rdklib.errors import InvalidParametersError
 class Evaluator:
     __rdk_rule = None
 
-    def __init__(self, config_rule):
+    def __init__(self, config_rule, region=None):
         self.__rdk_rule = config_rule
+        self.__region = region
 
     def handle(self, event, context):
 
         check_defined(event, 'event')
 
-        client_factory = ClientFactory(self.__rdk_rule.get_execution_role_arn(event))
+        client_factory = ClientFactory(self.__rdk_rule.get_execution_role_arn(event), region=self.__region)
         invoking_event = init_event(event, client_factory)
 
         rule_parameters = {}
@@ -35,7 +36,7 @@ class Evaluator:
             rule_parameters = json.loads(event['ruleParameters'])
 
         try:
-            valid_rule_parameters = self.__rdk_rule.evaluate_parameters(rule_parameters)
+            valid_rule_parameters = self.__rdk_rule.evaluate_parameters(event, client_factory, rule_parameters)
         except InvalidParametersError as ex:
             return build_parameters_value_error_response(ex)
 
