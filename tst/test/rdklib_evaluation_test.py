@@ -24,9 +24,9 @@ class rdklibEvaluationTest(unittest.TestCase):
     def test_compliance_type(self):
 
         # Valid value
-        self.assertTrue(CODE.ComplianceType.get_name(CODE.ComplianceType.NOT_APPLICABLE) == "NOT_APPLICABLE" )
-        self.assertTrue(CODE.ComplianceType.get_name(CODE.ComplianceType.COMPLIANT) == "COMPLIANT" )
-        self.assertTrue(CODE.ComplianceType.get_name(CODE.ComplianceType.NON_COMPLIANT) == "NON_COMPLIANT" )
+        self.assertTrue(CODE.ComplianceType.NOT_APPLICABLE == "NOT_APPLICABLE" )
+        self.assertTrue(CODE.ComplianceType.COMPLIANT == "COMPLIANT" )
+        self.assertTrue(CODE.ComplianceType.NON_COMPLIANT == "NON_COMPLIANT" )
 
         # Invalid value
         with self.assertRaises(AttributeError) as context:

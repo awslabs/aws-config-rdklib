@@ -6,7 +6,7 @@ class TEST_RULE_EMPTY(CODE.ConfigRule):
     pass
 
 class TEST_RULE_CHANGED(CODE.ConfigRule):
-    def evaluate_parameters(self, event, client_factory, rule_parameters):
+    def evaluate_parameters(self, rule_parameters):
         return rule_parameters.strip()
 
     def evaluate_periodic(self, event, client_factory, valid_rule_parameters):
@@ -30,10 +30,10 @@ class rdklibConfigRuleTest(unittest.TestCase):
             my_empty_rule.evaluate_change({}, {}, {}, {})
         self.assertTrue("You must implement the evaluate_change method of the ConfigRule class." in str(context.exception))
 
-        self.assertEqual("no_param", my_empty_rule.evaluate_parameters({}, {}, "no_param"))
+        self.assertEqual("no_param", my_empty_rule.evaluate_parameters("no_param"))
 
     def test_rule_methods_replaced(self):
         my_changed_rule = TEST_RULE_CHANGED()
-        self.assertEqual("param", my_changed_rule.evaluate_parameters({}, {}, " param "))
+        self.assertEqual("param", my_changed_rule.evaluate_parameters(" param "))
         self.assertEqual("COMPLIANT", my_changed_rule.evaluate_periodic({}, {}, {}))
         self.assertEqual("NON_COMPLIANT", my_changed_rule.evaluate_change({}, {}, {}, {}))

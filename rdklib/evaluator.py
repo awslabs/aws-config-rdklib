@@ -20,15 +20,14 @@ from rdklib.errors import InvalidParametersError
 class Evaluator:
     __rdk_rule = None
 
-    def __init__(self, config_rule, region=None):
+    def __init__(self, config_rule):
         self.__rdk_rule = config_rule
-        self.__region = region
 
     def handle(self, event, context):
 
         check_defined(event, 'event')
 
-        client_factory = ClientFactory(self.__rdk_rule.get_execution_role_arn(event), region=self.__region)
+        client_factory = ClientFactory(self.__rdk_rule.get_execution_role_arn(event))
         invoking_event = init_event(event, client_factory)
 
         rule_parameters = {}
@@ -36,7 +35,7 @@ class Evaluator:
             rule_parameters = json.loads(event['ruleParameters'])
 
         try:
-            valid_rule_parameters = self.__rdk_rule.evaluate_parameters(event, client_factory, rule_parameters)
+            valid_rule_parameters = self.__rdk_rule.evaluate_parameters(rule_parameters)
         except InvalidParametersError as ex:
             return build_parameters_value_error_response(ex)
 

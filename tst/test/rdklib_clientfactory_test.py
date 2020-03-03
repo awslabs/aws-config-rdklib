@@ -12,7 +12,7 @@ def client(client_name, *args, **kwargs):
         return STS_CLIENT_MOCK
     return OTHER_CLIENT_MOCK
 
-def credentials(role_arn, region):
+def credentials(role_arn):
     return {
         'AccessKeyId': 'some-key-id',
         'SecretAccessKey': 'some-secret',
