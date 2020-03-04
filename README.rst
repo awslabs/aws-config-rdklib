@@ -17,7 +17,7 @@ Install the library locally
 
 ::
 
-    pip install git+https://github.com/awslabs/aws-config-rdklib
+    pip install rdklib
 
 Create a rule using the RDK 
 ---------------------------
@@ -188,19 +188,19 @@ Class for the *Evaluation* object.
 
 **Parameter**
 
-* **complianceType** *(ComplianceType)* [REQUIRED]
+* **complianceType** *(ComplianceType)* **[REQUIRED]**
 
   Compliance type of the evaluation.
 
-* **complianceResourceId** *(string)* [OPTIONAL]
+* **complianceResourceId** *(string)*
 
   ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
-* **annotation** *(string)* [OPTIONAL]
+* **annotation** *(string)*
 
   Annotation for the evaluation. It gets shorten to 255 characters automatically.
 
-* **complianceResourceType** *(string)* [OPTIONAL]
+* **complianceResourceType** *(string)*
 
   ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
@@ -229,6 +229,29 @@ Evaluation will not display:
 .. code-block:: python
 
     compliance_type = ComplianceType.NOT_APPLICABLE
+    
+*Helper functions* **rdklibtest**
+---------------------------------
+
+*assert_successful_evaluation(test_class, response, resp_expected, evaluations_count=1)*
+  Do a comparaison on the list of *Evalation* objects returned by either *evaluate_change()* or *evaluate_periodic()*.
+  
+  Request Syntax
+  
+  .. code-block:: python
+  
+    rdklibtest.assert_successful_evaluation(self, response, resp_expected, evaluations_count=2)
+  
+  Parameters
+    response (list of Evaluation Objects)
+      the list of the response from *evaluate_change()* or *evaluate_periodic()*
+    resp_expected (list of Evaluation Objects)
+      the list of the expected response from *evaluate_change()* or *evaluate_periodic()*
+    evaluations_count (int)
+      The number of Evaluation Objects expected.
+
+  Return
+      None
 
 License
 =======
