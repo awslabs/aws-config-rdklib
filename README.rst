@@ -283,7 +283,7 @@ Evaluation will not display:
         "ruleParameters": json.dumps(rule_parameters_json)
     }
 
-*create_test_scheduled_event(rule_parameters_json=None):
+*create_test_scheduled_event(\*\*kwargs)*
   Generate a dummy periodic event that can be used as input when testing *evaluate_periodic()*
 
   Request Syntax
