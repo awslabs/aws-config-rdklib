@@ -106,6 +106,7 @@ Dev Guide
   
     .. code-block:: python
     
+        from rdklib import InvalidParametersError
         raise InvalidParametersError("Error message to display")
   
     If the parameters are all valid, return a dict.
