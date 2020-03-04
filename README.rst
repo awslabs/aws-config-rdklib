@@ -236,13 +236,13 @@ Evaluation will not display:
 *assert_successful_evaluation(\*\*kwargs)*
   Do a comparaison on the list of *Evalation* objects returned by either *evaluate_change()* or *evaluate_periodic()*.
   
-  Request Syntax
+  **Request Syntax**
   
   .. code-block:: python
   
     rdklibtest.assert_successful_evaluation(self, response, resp_expected, evaluations_count=1)
   
-  Parameters
+  **Parameters**
     response (list of Evaluation Objects) **[REQUIRED]**
       the list of the response from *evaluate_change()* or *evaluate_periodic()*
     resp_expected (list of Evaluation Objects) **[REQUIRED]**
@@ -250,13 +250,13 @@ Evaluation will not display:
     evaluations_count (int)
       The number of Evaluation Objects expected. Default is 1.
 
-  Return
-      None
+  **Return**
+    None
 
 *create_test_configurationchange_event(\*\*kwargs)*
   Generate a dummy configuration change event that can be used as input when testing *evaluate_change()*
   
-  Request Syntax
+  **Request Syntax**
   
   .. code-block:: python
   
@@ -268,7 +268,7 @@ Evaluation will not display:
     rule_parameters_json (dict)
       the key/value pair(s) for the Rule parameters. Default to None.
   
-  Return Syntax
+  **Return Syntax**
 
   .. code-block:: python
   
@@ -286,17 +286,17 @@ Evaluation will not display:
 *create_test_scheduled_event(\*\*kwargs)*
   Generate a dummy periodic event that can be used as input when testing *evaluate_periodic()*
 
-  Request Syntax
+  **Request Syntax**
   
   .. code-block:: python
 
     rdklibtest.create_test_scheduled_event(rule_parameters_json=None)
 
-  Parameter
+  **Parameter**
     rule_parameters_json (dict)
       the key/value pair(s) for the Rule parameters. Default to None.
 
-  Return Syntax
+  **Return Syntax**
 
   .. code-block:: python
   
