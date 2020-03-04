@@ -17,7 +17,7 @@ Install the library locally
 
 ::
 
-    pip install git+https://github.com/awslabs/aws-config-rdklib
+    pip install rdklib
 
 Create a rule using the RDK 
 ---------------------------
@@ -188,19 +188,19 @@ Class for the *Evaluation* object.
 
 **Parameter**
 
-* **complianceType** *(ComplianceType)* [REQUIRED]
+* **complianceType** *(ComplianceType)* **[REQUIRED]**
 
   Compliance type of the evaluation.
 
-* **complianceResourceId** *(string)* [OPTIONAL]
+* **complianceResourceId** *(string)*
 
   ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
-* **annotation** *(string)* [OPTIONAL]
+* **annotation** *(string)*
 
   Annotation for the evaluation. It gets shorten to 255 characters automatically.
 
-* **complianceResourceType** *(string)* [OPTIONAL]
+* **complianceResourceType** *(string)*
 
   ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
@@ -229,6 +229,87 @@ Evaluation will not display:
 .. code-block:: python
 
     compliance_type = ComplianceType.NOT_APPLICABLE
+    
+*Helper functions* **rdklibtest**
+---------------------------------
+
+*assert_successful_evaluation(\*\*kwargs)*
+  Do a comparaison on the list of *Evalation* objects returned by either *evaluate_change()* or *evaluate_periodic()*.
+  
+  **Request Syntax**
+  
+  .. code-block:: python
+  
+    rdklibtest.assert_successful_evaluation(self, response, resp_expected, evaluations_count=1)
+  
+  **Parameters**
+    response (list of Evaluation Objects) **[REQUIRED]**
+      the list of the response from *evaluate_change()* or *evaluate_periodic()*
+    resp_expected (list of Evaluation Objects) **[REQUIRED]**
+      the list of the expected response from *evaluate_change()* or *evaluate_periodic()*
+    evaluations_count (int)
+      The number of Evaluation Objects expected. Default is 1.
+
+  **Return**
+    None
+
+*create_test_configurationchange_event(\*\*kwargs)*
+  Generate a dummy configuration change event that can be used as input when testing *evaluate_change()*
+  
+  **Request Syntax**
+  
+  .. code-block:: python
+  
+    rdklibtest.create_test_configurationchange_event(invoking_event_json, rule_parameters_json=None)
+
+  Parameters
+    invoking_event (dict) **[REQUIRED]**
+      the invoking event json from Config
+    rule_parameters_json (dict)
+      the key/value pair(s) for the Rule parameters. Default to None.
+  
+  **Return Syntax**
+
+  .. code-block:: python
+  
+    {
+        "configRuleName":"myrule",
+        "executionRoleArn":"arn:aws:iam::123456789012:role/example",
+        "eventLeftScope": False,
+        "invokingEvent": json.dumps(invoking_event_json),
+        "accountId": "123456789012",
+        "configRuleArn": "arn:aws:config:us-east-1:123456789012:config-rule/config-rule-8fngan",
+        "resultToken":"token",
+        "ruleParameters": json.dumps(rule_parameters_json)
+    }
+
+*create_test_scheduled_event(\*\*kwargs)*
+  Generate a dummy periodic event that can be used as input when testing *evaluate_periodic()*
+
+  **Request Syntax**
+  
+  .. code-block:: python
+
+    rdklibtest.create_test_scheduled_event(rule_parameters_json=None)
+
+  **Parameter**
+    rule_parameters_json (dict)
+      the key/value pair(s) for the Rule parameters. Default to None.
+
+  **Return Syntax**
+
+  .. code-block:: python
+  
+    {
+        "configRuleName":"myrule",
+        "executionRoleArn":"arn:aws:iam::123456789012:role/example",
+        "eventLeftScope": False,
+        "invokingEvent": "{\"messageType\": \"ScheduledNotification\", \"notificationCreationTime\": \"2017-12-23T22:11:18.158Z\"}",
+        "accountId": "123456789012",
+        "configRuleArn": "arn:aws:config:us-east-1:123456789012:config-rule/config-rule-8fngan",
+        "resultToken":"token",
+        "ruleParameters": json.dumps(rule_parameters_json)
+    }
 
 License
 =======
