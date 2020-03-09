@@ -1,6 +1,10 @@
 RDKlib
 ======
 
+.. image:: https://github.com/awslabs/aws-config-rdklib/workflows/ci/badge.svg?branch=master
+    :target: https://github.com/awslabs/aws-config-rdklib/actions?query=workflow%3Aci+branch%3Amaster
+
+
 RDKlib is a Python library to enable you to **run custom AWS Config Rules at scale**. The library can be used to:
 
 + Help you to focus only on the compliance logic, while the library does the heavy lifting
