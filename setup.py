@@ -44,5 +44,11 @@ setup(name='rdklib',
           'boto3',
           'botocore'
       ],
+      classifiers=[
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+      ],
       zip_safe=False,
       include_package_data=True)
