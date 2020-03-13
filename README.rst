@@ -187,9 +187,9 @@ Class for the *Evaluation* object.
 
     evaluation = Evaluation(
         complianceType='ComplianceType',
-        complianceResourceId='string',
-        annotation='string',
-        complianceResourceType='string')
+        resourceId='string',
+        resourceType='string',
+        annotation='string')
 
 **Parameter**
 
@@ -197,17 +197,17 @@ Class for the *Evaluation* object.
 
   Compliance type of the evaluation.
 
-* **complianceResourceId** *(string)*
+* **resourceId** *(string)*
 
-  ResourceId of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+  Resource id of the evaluation. It gets autopopulated for Configuration Change triggered rule.
+
+* **resourceType** *(string)*
+
+  Resource type of the evaluation (as per AWS CloudFormation definition). It gets autopopulated for Configuration Change triggered rule.
 
 * **annotation** *(string)*
 
   Annotation for the evaluation. It gets shorten to 255 characters automatically.
-
-* **complianceResourceType** *(string)*
-
-  ResourceType of the evaluation. It gets autopopulated for Configuration Change triggered rule.
 
 *class* **ComplianceType**
 --------------------------
