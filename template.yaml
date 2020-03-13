@@ -31,4 +31,5 @@ Resources:
       CompatibleRuntimes:
         - python3.6
         - python3.7
+        - python3.8
       LicenseInfo: 'Apache License, Version 2.0'
