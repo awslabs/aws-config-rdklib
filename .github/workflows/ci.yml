@@ -28,6 +28,7 @@ jobs:
     - name: Coverage
       run: |
         pip install coverage
+        pip install ./
         cd tst
         coverage run -m execute_test.py
         coverage report -m --fail-under 100

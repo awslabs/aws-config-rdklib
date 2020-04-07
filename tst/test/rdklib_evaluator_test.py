@@ -64,6 +64,15 @@ class rdklibEvaluatorTest(unittest.TestCase):
         resp_expected = {'internalErrorMessage': 'Unexpected error while completing API request', 'internalErrorDetails': 'An error occurred (InternalError) when calling the operation operation: some-internal-error', 'customerErrorMessage': None, 'customerErrorCode': None}
         self.assertDictEqual(response, resp_expected)
 
+    def test_evaluator_handle_other_error(self):
+        event = generate_event('ScheduledNotification')
+        self.rule.evaluate_parameters.return_value = 'some-param'
+        self.rule.evaluate_periodic.side_effect = botocore.exceptions.ClientError({'Error': {'Code': 'OtherError', 'Message': 'some-other-error'}}, 'operation')
+        evaluator = CODE.Evaluator(self.rule)
+        response = evaluator.handle(event, {})
+        resp_expected = {'internalErrorMessage': 'Customer error while making API request', 'internalErrorDetails': 'An error occurred (OtherError) when calling the operation operation: some-other-error', 'customerErrorMessage': 'some-other-error', 'customerErrorCode': 'OtherError'}
+        self.assertDictEqual(response, resp_expected)
+
     def test_evaluator_handle_valueerror_error(self):
         event = generate_event('ScheduledNotification')
         rule = MagicMock()

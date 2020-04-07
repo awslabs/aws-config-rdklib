@@ -29,7 +29,7 @@ class ConfigRule:
 
     def get_execution_role_arn(self, event):
         role_arn = None
-        if event['ruleParameters']:
+        if event.get('ruleParameters'):
             rule_params = json.loads(event['ruleParameters'])
             role_name = rule_params.get("ExecutionRoleName")
             if role_name:
