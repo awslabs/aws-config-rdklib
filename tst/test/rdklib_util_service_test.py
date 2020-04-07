@@ -4,6 +4,7 @@ from mock import patch, MagicMock
 import botocore
 
 CODE = __import__('service')
+RESOURCE_TYPE = 'some-resource-type'
 
 CONFIG_CLIENT_MOCK = MagicMock()
 
@@ -19,23 +20,35 @@ class rdklibUtilServiceTest(unittest.TestCase):
         response = CODE.check_defined(ref, 'ref')
         self.assertEqual(response, ref)
 
-    def test_is_applicable(self):
+    def test_is_applicable_status(self):
         status_false = ['ResourceDeleted', 'ResourceDeletedNotRecorded', 'ResourceNotRecorded']
         status_true = ['OK', 'ResourceDiscovered']
 
         for status in status_false:
             config_item = build_config_item(status)
-            response = CODE.is_applicable(config_item, build_normal_event(False))
+            response = CODE.is_applicable_status(config_item, build_normal_event(False))
             self.assertFalse(response)
-            response = CODE.is_applicable(config_item, build_normal_event(True))
+            response = CODE.is_applicable_status(config_item, build_normal_event(True))
             self.assertFalse(response)
 
         for status in status_true:
             config_item = build_config_item(status)
-            response = CODE.is_applicable(config_item, build_normal_event(False))
+            response = CODE.is_applicable_status(config_item, build_normal_event(False))
             self.assertTrue(response)
-            response = CODE.is_applicable(config_item, build_normal_event(True))
+            response = CODE.is_applicable_status(config_item, build_normal_event(True))
             self.assertFalse(response)
+
+    def test_is_applicable_resource_type(self):
+        config_item = build_config_item('OK')
+
+        response = CODE.is_applicable_resource_type(config_item, ['other-resource-type'])
+        self.assertFalse(response)
+
+        response = CODE.is_applicable_resource_type(config_item, [RESOURCE_TYPE])
+        self.assertTrue(response)
+
+        response = CODE.is_applicable_resource_type(config_item, [])
+        self.assertFalse(response)
 
     def test_get_configuration_item(self):
         invoke_event = {'configurationItem': 'some-ci'}
@@ -82,8 +95,8 @@ class rdklibUtilServiceTest(unittest.TestCase):
         resp_expected = {
             'internalErrorMessage': 'int_msg',
             'internalErrorDetails': 'int_detail',
-            'customerErrorMessage': 'InternalError',
-            'customerErrorCode': 'InternalError'
+            'customerErrorMessage': None,
+            'customerErrorCode': None
             }
         self.assertDictEqual(response, resp_expected)
 
@@ -120,7 +133,7 @@ class rdklibUtilServiceTest(unittest.TestCase):
         CODE.convert_into_notification_config_item = MagicMock(return_value=build_config_item('some-type'))
         invoke_event = json.loads(build_normal_event(True)['invokingEvent'])
         response = CODE.inflate_oversized_notification({}, invoke_event)
-        resp_expected = {'configurationItem': {'configurationItemStatus': 'some-type'}, 'notificationCreationTime': 'some-time', 'messageType': 'ConfigurationItemChangeNotification', 'recordVersion': 'some-version'}
+        resp_expected = {'configurationItem': {'configurationItemStatus': 'some-type', 'resourceType': 'some-resource-type'}, 'notificationCreationTime': 'some-time', 'messageType': 'ConfigurationItemChangeNotification', 'recordVersion': 'some-version'}
         self.assertDictEqual(response, resp_expected)
 
     @patch.object(CONFIG_CLIENT_MOCK, 'get_resource_config_history', MagicMock(return_value='invoked'))
@@ -175,7 +188,8 @@ def build_grh_response():
 
 def build_config_item(message_type):
     return {
-        'configurationItemStatus': message_type
+        'configurationItemStatus': message_type,
+        'resourceType': RESOURCE_TYPE
         }
 
 def build_normal_event(event_bool):

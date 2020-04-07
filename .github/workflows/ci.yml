@@ -25,3 +25,8 @@ jobs:
       run: |
         pip install rdk boto3
         python setup.py test
+    - name: Coverage
+      run: |
+        pip install coverage
+        coverage run tst/execute_test.py
+        coverage report --fail-under 100

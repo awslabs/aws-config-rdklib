@@ -8,12 +8,18 @@ def check_defined(reference, reference_name):
     return reference
 
 # Check whether the resource has been deleted. If it has, then the evaluation is unnecessary.
-def is_applicable(configuration_item, event):
+def is_applicable_status(configuration_item, event):
     status = configuration_item['configurationItemStatus']
     event_left_scope = event['eventLeftScope']
     if status in ('ResourceDeleted', 'ResourceDeletedNotRecorded', 'ResourceNotRecorded'):
         print("Resource Deleted, setting Compliance Status to NOT_APPLICABLE.")
     return status in ('OK', 'ResourceDiscovered') and not event_left_scope
+
+# Check whether the resource type for the CI is in scope for the rule - if not, we can skip evaluation
+def is_applicable_resource_type(configuration_item, expected_resource_types):
+    if configuration_item['resourceType'] not in expected_resource_types:
+        print("ResourceType is not in expected resource types")
+    return configuration_item['resourceType'] in expected_resource_types
 
 # Based on the type of message get the configuration item
 # either from configurationItem in the invoking event
@@ -31,7 +37,7 @@ def is_internal_error(exception):
         )
 
 def build_internal_error_response(internal_error_message, internal_error_details=None):
-    return build_error_response(internal_error_message, internal_error_details, 'InternalError', 'InternalError')
+    return build_error_response(internal_error_message, internal_error_details)
 
 def build_error_response(internal_error_message, internal_error_details=None, customer_error_code=None, customer_error_message=None):
     error_response = {
