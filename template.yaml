@@ -8,9 +8,9 @@ Metadata:
     SpdxLicenseId: Apache-2.0
     LicenseUrl: LICENSE
     ReadmeUrl: README.rst
-    Labels: ['beta']
+    Labels: ['stable']
     HomePageUrl: https://github.com/awslabs/aws-config-rdklib
-    SemanticVersion: 0.0.4
+    SemanticVersion: 0.1.0
     SourceCodeUrl: https://github.com/awslabs/aws-config-rdklib
 
 Description: >
