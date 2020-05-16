@@ -28,6 +28,11 @@ class rdklibClientFactoryTest(unittest.TestCase):
         client_factory = CODE.ClientFactory('arn:aws:iam:::role/some-role-name')
         self.assertEqual(client_factory.__dict__['_ClientFactory__role_arn'], 'arn:aws:iam:::role/some-role-name')
 
+        # init with region
+        client_factory = CODE.ClientFactory('arn:aws:iam:::role/some-role-name', 'some-region')
+        self.assertEqual(client_factory.__dict__['_ClientFactory__role_arn'], 'arn:aws:iam:::role/some-role-name')
+        self.assertEqual(client_factory.__dict__['_ClientFactory__region'], 'some-region']
+
         # No role arn error
         client_factory.__dict__['_ClientFactory__role_arn'] = None
         with self.assertRaises(Exception) as context:
@@ -51,15 +56,15 @@ class rdklibClientFactoryTest(unittest.TestCase):
 
     def test_get_assume_role_credentials(self):
         STS_CLIENT_MOCK.assume_role.return_value = {'Credentials': 'some-creds'}
-        response = CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name')
+        response = CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name', 'some-region')
         self.assertEqual(response, 'some-creds')
 
         STS_CLIENT_MOCK.assume_role.side_effect = botocore.exceptions.ClientError({'Error': {'Code': 'AccessDenied', 'Message': 'access-denied'}}, 'operation')
         with self.assertRaises(botocore.exceptions.ClientError) as context:
-            CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name')
+            CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name', 'some-region')
         self.assertDictEqual(context.exception.response, {'Error': {'Code': 'AccessDenied', 'Message': 'AWS Config does not have permission to assume the IAM role.'}})
 
         STS_CLIENT_MOCK.assume_role.side_effect = botocore.exceptions.ClientError({'Error': {'Code': 'Some-other-error', 'Message': 'Some-other-error'}}, 'operation')
         with self.assertRaises(botocore.exceptions.ClientError) as context:
-            CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name')
+            CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name', 'some-region')
         self.assertDictEqual(context.exception.response, {'Error': {'Code': 'InternalError', 'Message': 'InternalError'}})
