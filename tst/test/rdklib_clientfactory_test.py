@@ -12,7 +12,7 @@ def client(client_name, *args, **kwargs):
         return STS_CLIENT_MOCK
     return OTHER_CLIENT_MOCK
 
-def credentials(role_arn):
+def credentials(role_arn, region):
     return {
         'AccessKeyId': 'some-key-id',
         'SecretAccessKey': 'some-secret',
@@ -31,7 +31,7 @@ class rdklibClientFactoryTest(unittest.TestCase):
         # init with region
         client_factory = CODE.ClientFactory('arn:aws:iam:::role/some-role-name', 'some-region')
         self.assertEqual(client_factory.__dict__['_ClientFactory__role_arn'], 'arn:aws:iam:::role/some-role-name')
-        self.assertEqual(client_factory.__dict__['_ClientFactory__region'], 'some-region']
+        self.assertEqual(client_factory.__dict__['_ClientFactory__region'], 'some-region')
 
         # No role arn error
         client_factory.__dict__['_ClientFactory__role_arn'] = None
@@ -41,6 +41,7 @@ class rdklibClientFactoryTest(unittest.TestCase):
 
         # No creds already
         client_factory.__dict__['_ClientFactory__role_arn'] = 'arn:aws:iam:::role/some-role-name'
+        client_factory.__dict__['_ClientFactory__region'] = 'some_region'
         response = client_factory.build_client('other')
         self.assertEqual(response, OTHER_CLIENT_MOCK)
 
