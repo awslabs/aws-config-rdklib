@@ -2,7 +2,7 @@ Metadata-Version: 1.0
 Name: rdklib
 Version: 0.0.2
 Summary: Rule Development Kit Library for AWS Config
-Home-page: https://code.amazon.com/packages/RDKLib/trees/mainline/--/
+Home-page: https://github.com/awslabs/aws-config-rdklib/
 Author: Michael Borchert
 Author-email: mborch@amazon.com
 License: Apache License Version 2.0
