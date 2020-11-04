@@ -10,7 +10,7 @@ Metadata:
     ReadmeUrl: README.rst
     Labels: ['stable']
     HomePageUrl: https://github.com/awslabs/aws-config-rdklib
-    SemanticVersion: 0.1.0
+    SemanticVersion: 0.2.0
     SourceCodeUrl: https://github.com/awslabs/aws-config-rdklib
 
 Description: >

@@ -1,4 +1,5 @@
 build
 opt
+dist
 .idea
 *__pycache__*
