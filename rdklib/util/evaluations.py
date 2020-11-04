@@ -76,7 +76,7 @@ def clean_up_old_evaluations(event, client_factory, latest_evaluations):
             NextToken=next_token)
 
         old_evals.extend(compliance_details['EvaluationResults'])
-        next_token = compliance_details.get('nextToken', '')
+        next_token = compliance_details.get('NextToken', '')
         if not next_token:
             break
 
