@@ -1,6 +1,6 @@
 import json
 import unittest
-from mock import patch, MagicMock
+from unittest.mock import patch, MagicMock
 from rdklib.configrule import ConfigRule
 from rdklib.evaluation import ComplianceType, Evaluation
 

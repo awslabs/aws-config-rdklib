@@ -1,5 +1,5 @@
 import unittest
-from mock import patch, MagicMock
+from unittest.mock import patch, MagicMock
 
 CODE = __import__('external')
 
