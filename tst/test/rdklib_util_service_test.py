@@ -23,6 +23,7 @@ class rdklibUtilServiceTest(unittest.TestCase):
     def test_is_applicable_status(self):
         status_false = ['ResourceDeleted', 'ResourceDeletedNotRecorded', 'ResourceNotRecorded']
         status_true = ['OK', 'ResourceDiscovered']
+        status_flag = True
 
         for status in status_false:
             config_item = build_config_item(status)
@@ -37,6 +38,21 @@ class rdklibUtilServiceTest(unittest.TestCase):
             self.assertTrue(response)
             response = CODE.is_applicable_status(config_item, build_normal_event(True))
             self.assertFalse(response)
+
+        for status in status_false:
+            config_item = build_config_item(status)
+            response = CODE.is_applicable_status(config_item, build_normal_event(False), is_applicable=status_flag)
+            self.assertTrue(response)
+            response = CODE.is_applicable_status(config_item, build_normal_event(True), is_applicable=status_flag)
+            self.assertTrue(response)
+
+        for status in status_true:
+            config_item = build_config_item(status)
+            response = CODE.is_applicable_status(config_item, build_normal_event(False), is_applicable=status_flag)
+            self.assertTrue(response)
+            response = CODE.is_applicable_status(config_item, build_normal_event(True), is_applicable=status_flag)
+            self.assertTrue(response)
+
 
     def test_is_applicable_resource_type(self):
         config_item = build_config_item('OK')
