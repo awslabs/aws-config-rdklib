@@ -15,7 +15,7 @@ Metadata:
 
 Description: >
   rdklib library for authoring Config Rules
-  
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -33,3 +33,8 @@ Resources:
         - python3.7
         - python3.8
       LicenseInfo: 'Apache License, Version 2.0'
+
+Outputs:
+  RdklibLayerArn:
+    Description: rdklib layer ARN
+    Value: !Ref RdklibLayer
