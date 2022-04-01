@@ -8,9 +8,12 @@ def check_defined(reference, reference_name):
     return reference
 
 # Check whether the resource has been deleted. If it has, then the evaluation is unnecessary.
-def is_applicable_status(configuration_item, event):
+def is_applicable_status(configuration_item, event, **kwargs):
     status = configuration_item['configurationItemStatus']
+    is_applicable = kwargs.get('is_applicable', None)
     event_left_scope = event['eventLeftScope']
+    if is_applicable:
+        return True
     if status in ('ResourceDeleted', 'ResourceDeletedNotRecorded', 'ResourceNotRecorded'):
         print("Resource Deleted, setting Compliance Status to NOT_APPLICABLE.")
     return status in ('OK', 'ResourceDiscovered') and not event_left_scope

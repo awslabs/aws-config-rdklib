@@ -21,8 +21,9 @@ class Evaluator:
     __rdk_rule = None
     __expected_resource_types = None
 
-    def __init__(self, config_rule, expected_resource_types=None):
+    def __init__(self, config_rule, expected_resource_types=None, is_applicable_status=False):
         self.__rdk_rule = config_rule
+        self.is_applicable = is_applicable_status
         if expected_resource_types is None:
             self.__expected_resource_types = []
         else:
@@ -52,7 +53,7 @@ class Evaluator:
                 if not self.__expected_resource_types:
                     raise Exception("Change triggered rules must provide expected resource types")
                 configuration_item = get_configuration_item(invoking_event)
-                if is_applicable_status(configuration_item, event) and is_applicable_resource_type(configuration_item, self.__expected_resource_types):
+                if is_applicable_status(configuration_item, event, is_applicable=self.is_applicable) and is_applicable_resource_type(configuration_item, self.__expected_resource_types):
                     compliance_result = self.__rdk_rule.evaluate_change(event, client_factory, configuration_item, valid_rule_parameters)
                 else:
                     compliance_result = [Evaluation(ComplianceType.NOT_APPLICABLE)]
