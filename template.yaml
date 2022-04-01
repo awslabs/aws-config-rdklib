@@ -10,7 +10,7 @@ Metadata:
     ReadmeUrl: README.rst
     Labels: ['stable']
     HomePageUrl: https://github.com/awslabs/aws-config-rdklib
-    SemanticVersion: 0.2.1
+    SemanticVersion: 0.2.2
     SourceCodeUrl: https://github.com/awslabs/aws-config-rdklib
 
 Description: >
@@ -32,6 +32,7 @@ Resources:
         - python3.6
         - python3.7
         - python3.8
+        - python3.9
       LicenseInfo: 'Apache License, Version 2.0'
 
 Outputs:
