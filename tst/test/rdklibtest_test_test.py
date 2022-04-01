@@ -1,6 +1,6 @@
 import json
 import unittest
-from rdklib import Evaluation, ComplianceType
+from rdklib.evaluation import Evaluation, ComplianceType
 
 CODE = __import__('test')
 

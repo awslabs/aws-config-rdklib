@@ -2,7 +2,7 @@ import json
 import unittest
 from unittest.mock import patch, MagicMock
 import botocore
-from rdklib import InvalidParametersError
+from rdklib.errors import InvalidParametersError
 
 CODE = __import__('evaluator')
 
