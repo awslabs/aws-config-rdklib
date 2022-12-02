@@ -37,7 +37,7 @@ class rdklibClientFactoryTest(unittest.TestCase):
         client_factory.__dict__['_ClientFactory__role_arn'] = None
         with self.assertRaises(Exception) as context:
             client_factory.build_client('other')
-        self.assertTrue('No Role ARN - ClientFactory must be initialized before build_client is called.' in str(context.exception))
+        self.assertTrue('No Role ARN - ClientFactory must be initialized with a role_arn or set assume_role_arn to False before build_client is called.' in str(context.exception))
 
         # No creds already
         client_factory.__dict__['_ClientFactory__role_arn'] = 'arn:aws:iam:::role/some-role-name'
@@ -54,6 +54,10 @@ class rdklibClientFactoryTest(unittest.TestCase):
         client_factory.__dict__['_ClientFactory__sts_credentials'] = other_creds
         client_factory.build_client('other')
         self.assertDictEqual(client_factory.__dict__['_ClientFactory__sts_credentials'], other_creds)
+
+        # disable assume role mode 
+        client_factory = CODE.ClientFactory(role_arn = 'arn:aws:iam:::role/some-role-name', region = 'some-region', assume_role_mode = False)
+        self.assertEqual(client_factory.__dict__['_ClientFactory__assume_role_mode'], False)
 
     def test_get_assume_role_credentials(self):
         STS_CLIENT_MOCK.assume_role.return_value = {'Credentials': 'some-creds'}

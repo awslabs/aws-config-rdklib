@@ -32,13 +32,13 @@ The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provi
 
 ::
 
-    rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
+    rdk create YOUR_RULE_NAME --runtime python3.9-lib --maximum-frequency TwentyFour_Hours
 
 * For configuration change trigger (for example S3 Bucket)
 
 ::
 
-    rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types AWS::S3::Bucket
+    rdk create YOUR_RULE_NAME --runtime python3.9-lib --resource-types AWS::S3::Bucket
 
 ..
 
@@ -85,13 +85,25 @@ Dev Guide
   .. code-block:: python
 
     response = client_factory.build_client(
-        service='string')
+        service='string', region='string', assume_role_mode='bool')
 
   **Parameter**
 
   + **service** *(string)* -- **[REQUIRED]**
   
     The boto3 name of the AWS service
+
+  + **region** *(string)* -- **[OPTIONAL]**
+
+    Default: None
+    The boto3 region
+
+  + **assume_role_mode** *(string)* -- **[OPTIONAL]**
+
+    Default: True
+    By Default, ClientFactory is using AWS Config Role, which is comming from Config Rule event. 
+    1) User can disable the assume_role_mode by setting it to False or set 'AssumeRoleMode' to False in Config Rules Parameter. ClientFactory will then use the attached lambda role for the execution. 
+    2) User also can specify a custom role in Config Rules Parameter with 'ExecutionRoleName' as well as 'ExecutionRoleRegion' for ClientFactory
     
 *class* **ConfigRule**
 ----------------------
@@ -326,8 +338,14 @@ Feedback / Questions
 
 Feel free to email rdk-maintainers@amazon.com
 
-Authors
-=======
+Contacts
+========
+* **Ricky Chau** - *Maintainer, code, testing*
+* **Mark Beacom** - *Maintainer, code, testing*
+* **Julio Delgado Jr.** - *Design, testing, feedback*
+
+Acknowledge 
+===========
 * **Jonathan Rault** - *Maintainer, design, code, testing, feedback*
 * **Ricky Chau** - *Maintainer, code, testing*
 * **Michael Borchert** - *Design, code, testing, feedback*
