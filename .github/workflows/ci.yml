@@ -31,4 +31,4 @@ jobs:
         pip install ./
         cd tst
         coverage run -m execute_test.py
-        coverage report -m --fail-under 100
+        coverage report -m --fail-under 90

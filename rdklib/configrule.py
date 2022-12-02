@@ -54,7 +54,7 @@ class ConfigRule:
         if 'ruleParameters' in event:
             rule_params = json.loads(event['ruleParameters'])
             if "AssumeRoleMode" in rule_params:
-                assume_role_mode = rule_params.get("AssumeRoleMode")
+                assume_role_mode = rule_params.get("AssumeRoleMode").lower() != "false"
 
         return assume_role_mode
 

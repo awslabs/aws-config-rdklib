@@ -32,9 +32,7 @@ class ClientFactory:
         if not region:
             region = self.__region
 
-        if not assume_role_mode:
-            return boto3.client(service, region)
-        elif not self.__assume_role_mode:
+        if not assume_role_mode or not self.__assume_role_mode:
             return boto3.client(service, region)
 
         if not self.__role_arn:
@@ -61,7 +59,7 @@ def get_assume_role_credentials(role_arn, region):
         return assume_role_response['Credentials']
     except botocore.exceptions.ClientError as ex:
         if 'AccessDenied' in ex.response['Error']['Code']:
-            ex.response['Error']['Message'] = "AWS Config does not have permission to assume the IAM role. Please try 1) grant the right priviledge to the assume the IAM role OR 2) provide Config Rules parameter \"EXECUTION_ROLE_NAME\" to specify a role to execute your rule OR 3)Set Config Rules parameter \"ASSUME_ROLE_MODE\" to False to use your lambda role instead of default Config Role."
+            ex.response['Error']['Message'] = "AWS Config does not have permission to assume the IAM role. Please try 1) grant the right privilege to the assume the IAM role OR 2) provide Config Rules parameter \"EXECUTION_ROLE_NAME\" to specify a role to execute your rule OR 3)Set Config Rules parameter \"ASSUME_ROLE_MODE\" to False to use your lambda role instead of default Config Role."
         else:
             ex.response['Error']['Message'] = "InternalError"
             ex.response['Error']['Code'] = "InternalError"
