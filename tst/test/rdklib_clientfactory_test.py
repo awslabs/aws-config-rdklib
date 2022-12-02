@@ -37,7 +37,7 @@ class rdklibClientFactoryTest(unittest.TestCase):
         client_factory.__dict__['_ClientFactory__role_arn'] = None
         with self.assertRaises(Exception) as context:
             client_factory.build_client('other')
-        self.assertTrue('No Role ARN - ClientFactory must be initialized with a role_arn or set assume_role_arn to False before build_client is called.' in str(context.exception))
+        self.assertTrue('No Role ARN - ClientFactory must be initialized with a role_arn or set assume_role_mode to False before build_client is called.' in str(context.exception))
 
         # No creds already
         client_factory.__dict__['_ClientFactory__role_arn'] = 'arn:aws:iam:::role/some-role-name'
@@ -67,7 +67,8 @@ class rdklibClientFactoryTest(unittest.TestCase):
         STS_CLIENT_MOCK.assume_role.side_effect = botocore.exceptions.ClientError({'Error': {'Code': 'AccessDenied', 'Message': 'access-denied'}}, 'operation')
         with self.assertRaises(botocore.exceptions.ClientError) as context:
             CODE.get_assume_role_credentials('arn:aws:iam:::role/some-role-name', 'some-region')
-        self.assertDictEqual(context.exception.response, {'Error': {'Code': 'AccessDenied', 'Message': 'AWS Config does not have permission to assume the IAM role.'}})
+        self.assertTrue('AccessDenied' in str(context.exception.response['Error']['Code']))
+        self.assertTrue('AWS Config does not have permission to assume the IAM role.' in str(context.exception.response['Error']['Message']))
 
         STS_CLIENT_MOCK.assume_role.side_effect = botocore.exceptions.ClientError({'Error': {'Code': 'Some-other-error', 'Message': 'Some-other-error'}}, 'operation')
         with self.assertRaises(botocore.exceptions.ClientError) as context:
