@@ -342,8 +342,10 @@ Contacts
 ========
 * **Ricky Chau** - *Maintainer, code, testing*
 * **Mark Beacom** - *Maintainer, code, testing*
+* **Benjamin Morris** - *Maintainer, code, testing*
 * **Julio Delgado Jr.** - *Design, testing, feedback*
-
+ 
+ 
 Acknowledge 
 ===========
 * **Jonathan Rault** - *Maintainer, design, code, testing, feedback*
