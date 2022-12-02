@@ -1,4 +1,4 @@
-# Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2017-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You may
 # not use this file except in compliance with the License. A copy of the License is located at
@@ -33,7 +33,7 @@ class Evaluator:
 
         check_defined(event, 'event')
 
-        client_factory = ClientFactory(self.__rdk_rule.get_execution_role_arn(event))
+        client_factory = ClientFactory(role_arn=self.__rdk_rule.get_execution_role_arn(event), region=self.__rdk_rule.get_assume_role_region(event), assume_role_mode=self.__rdk_rule.get_assume_role_mode(event))
         invoking_event = init_event(event, client_factory)
 
         rule_parameters = {}

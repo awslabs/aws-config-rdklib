@@ -1,4 +1,4 @@
-# Copyright 2017-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# Copyright 2017-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"). You may
 # not use this file except in compliance with the License. A copy of the License is located at
@@ -40,6 +40,23 @@ class ConfigRule:
             role_arn = event['executionRoleArn']
 
         return role_arn
+
+    def get_assume_role_region(self, event):
+        assume_role_region = None
+        if 'ruleParameters' in event:
+            rule_params = json.loads(event['ruleParameters'])
+            assume_role_region = rule_params.get("ExecutionRoleRegion")
+
+        return assume_role_region
+    
+    def get_assume_role_mode(self, event):
+        assume_role_mode = True
+        if 'ruleParameters' in event:
+            rule_params = json.loads(event['ruleParameters'])
+            if "AssumeRoleMode" in rule_params:
+                assume_role_mode = rule_params.get("AssumeRoleMode").lower() != "false"
+
+        return assume_role_mode
 
 class MissingTriggerHandlerError(Exception):
     pass
