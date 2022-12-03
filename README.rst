@@ -251,7 +251,7 @@ Evaluation will not display:
 ---------------------------------
 
 *assert_successful_evaluation(\*\*kwargs)*
-  Do a comparaison on the list of *Evalation* objects returned by either *evaluate_change()* or *evaluate_periodic()*.
+  Do a comparison on the list of *Evaluation* objects returned by either *evaluate_change()* or *evaluate_periodic()*.
   
   **Request Syntax**
   
