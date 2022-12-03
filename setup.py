@@ -29,26 +29,29 @@ class build_py(build_py_orig):
             if not any(fnmatch.fnmatchcase(file, pat=pattern) for pattern in excluded)
         ]
 
-setup(name='rdklib',
-      version=MY_VERSION,
-      description='Rule Development Kit Library for AWS Config',
-      long_description=readme(),
-      url='https://github.com/awslabs/aws-config-rdklib/',
-      author='RDK Maintainers',
-      author_email='rdk-maintainers@amazon.com',
-      license='Apache License Version 2.0',
-      packages=find_namespace_packages(),
-      cmdclass={'build_py': build_py},
-      install_requires=[
-          'rdk',
-          'boto3',
-          'botocore'
-      ],
-      classifiers=[
+setup(
+    name='rdklib',
+    version=MY_VERSION,
+    description='Rule Development Kit Library for AWS Config',
+    long_description=readme(),
+    url='https://github.com/awslabs/aws-config-rdklib/',
+    author='RDK Maintainers',
+    author_email='rdk-maintainers@amazon.com',
+    license='Apache License Version 2.0',
+    packages=find_namespace_packages(),
+    cmdclass={'build_py': build_py},
+    install_requires=[
+        'rdk',
+        'boto3',
+        'botocore'
+    ],
+    classifiers=[
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-      ],
-      zip_safe=False,
-      include_package_data=True)
+        "Programming Language :: Python :: 3.9",
+    ],
+    zip_safe=False,
+    include_package_data=True,
+)
