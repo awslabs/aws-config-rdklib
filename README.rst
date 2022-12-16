@@ -26,7 +26,7 @@ Install the library locally
 Create a rule using the RDK 
 ---------------------------
 
-The runtime of your RDK rule have to be set to python3.6-lib in the RDK to provide you the Rule template.
+The runtime of your RDK rule have to be set to python3.9-lib in the RDK to provide you the Rule template.
 
 * For periodic trigger:
 
