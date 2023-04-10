@@ -54,7 +54,7 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
 
 ### Install via AWS Console
 
-1. Create Function from Serverless App Repository.  Click [here](https://console.aws.amazon.com/lambda/home#/create/function?tab=serverlessApps)
+1. Create Function from Serverless App Repository.  Click [here](https://console.aws.amazon.com/lambda/home#/create/application?tab=serverlessApps)
 1. Search for **rdklib**
 1. Deploy
 1. Take Note of the **PhysicalResourceId** as that is the ARN for the **RDKlib Layer**
