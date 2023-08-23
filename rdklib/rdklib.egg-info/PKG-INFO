@@ -23,12 +23,12 @@ Description: # rdklib
         
         For periodic:
         ```
-        rdk create YOUR_RULE_NAME --runtime python3.6-lib --maximum-frequency TwentyFour_Hours
+        rdk create YOUR_RULE_NAME --runtime python3.11-lib --maximum-frequency TwentyFour_Hours
         ```
         
         For scheduled
         ```
-        rdk create YOUR_RULE_NAME --runtime python3.6-lib --resource-types YOUR_RESOURCE_TYPE
+        rdk create YOUR_RULE_NAME --runtime python3.11-lib --resource-types YOUR_RESOURCE_TYPE
         ```
         
         ## Dev Guide
