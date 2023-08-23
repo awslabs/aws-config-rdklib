@@ -21,11 +21,11 @@ The **RDKlib Add-On** has the objective to take the same example, MFA_ENABLED_RU
 
 - Periodic Trigger Example:
 
-      rdk create RULE_NAME --runtime python3.9-lib --maximum-frequency TwentyFour_Hours
+      rdk create RULE_NAME --runtime python3.11-lib --maximum-frequency TwentyFour_Hours
 
 - Configuration Change Trigger Example (for IAM User)
 
-      rdk create YOUR_RULE_NAME --runtime python3.9-lib --resource-types AWS::IAM::User
+      rdk create YOUR_RULE_NAME --runtime python3.11-lib --resource-types AWS::IAM::User
 
 ## Task 3: Write the Code
 
