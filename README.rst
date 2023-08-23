@@ -26,19 +26,19 @@ Install the library locally
 Create a rule using the RDK 
 ---------------------------
 
-The runtime of your RDK rule have to be set to python3.9-lib in the RDK to provide you the Rule template.
+The runtime of your RDK rule have to be set to python3.11-lib in the RDK to provide you the Rule template.
 
 * For periodic trigger:
 
 ::
 
-    rdk create YOUR_RULE_NAME --runtime python3.9-lib --maximum-frequency TwentyFour_Hours
+    rdk create YOUR_RULE_NAME --runtime python3.11-lib --maximum-frequency TwentyFour_Hours
 
 * For configuration change trigger (for example S3 Bucket)
 
 ::
 
-    rdk create YOUR_RULE_NAME --runtime python3.9-lib --resource-types AWS::S3::Bucket
+    rdk create YOUR_RULE_NAME --runtime python3.11-lib --resource-types AWS::S3::Bucket
 
 ..
 
@@ -340,10 +340,8 @@ Feel free to email rdk-maintainers@amazon.com
 
 Contacts
 ========
-* **Ricky Chau** - *Maintainer, code, testing*
-* **Mark Beacom** - *Maintainer, code, testing*
 * **Benjamin Morris** - *Maintainer, code, testing*
-* **Julio Delgado Jr.** - *Design, testing, feedback*
+* **Carlo DePaolis** - *Maintainer, code, testing*
  
  
 Acknowledge 
@@ -353,3 +351,6 @@ Acknowledge
 * **Michael Borchert** - *Design, code, testing, feedback*
 * **Joe Lee** - *Design, feedback*
 * **Chris Gutierrez** - *Design, feedback*
+* **Ricky Chau** - *Maintainer, code, testing*
+* **Mark Beacom** - *Maintainer, code, testing*
+* **Julio Delgado Jr.** - *Design, testing, feedback*
