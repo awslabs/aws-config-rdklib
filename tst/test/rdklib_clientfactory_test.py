@@ -3,7 +3,19 @@ from unittest.mock import patch, MagicMock
 import botocore
 import importlib
 
-CODE = importlib.import_module("../../rdklib/clientfactory")
+import sys
+import os
+
+# Get the absolute path of the current script
+current_script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Get the absolute path of the project directory
+project_dir = os.path.abspath(os.path.join(current_script_dir, "..", ".."))
+
+# Add the project directory to the Python path
+sys.path.append(project_dir)
+
+CODE = importlib.import_module("rdklib.clientfactory")
 
 STS_CLIENT_MOCK = MagicMock()
 OTHER_CLIENT_MOCK = MagicMock()

@@ -16,6 +16,7 @@ rdklib.egg-info/top_level.txt
 rdklib/util/__init__.py
 rdklib/util/evaluations.py
 rdklib/util/external.py
+rdklib/util/internal.py
 rdklib/util/service.py
 rdklibtest/__init__.py
 rdklibtest/test.py
