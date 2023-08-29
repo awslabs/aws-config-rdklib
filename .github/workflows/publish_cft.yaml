@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy:
+    environment: prod
     strategy:
       # Importing the StackSets was failing, so instead, using matrix
       matrix:
