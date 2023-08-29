@@ -49,3 +49,14 @@ jobs:
         with:
           name: serverlessrepo-rdklib-layer
           template: template.yaml
+      - name: Set output
+        id: getTagVersion
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Create new issue in aws-config-rdk notifying of new layer version
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${{ github.token }}
+          title: RDKLIB Version ${{ steps.getTagVersion.outputs.tag }} Available
+          body: A new tag has been released in rdklib, and RDK should be updated to use the latest layer
+          org: awslabs
+          repo: aws-config-rdk
