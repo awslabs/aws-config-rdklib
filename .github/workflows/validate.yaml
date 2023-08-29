@@ -3,10 +3,10 @@ name: "Validation"
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   ## TODO: Enable this once the repo is totally formatted to standard.
