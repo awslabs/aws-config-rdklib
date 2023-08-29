@@ -50,6 +50,9 @@ jobs:
         with:
           name: serverlessrepo-rdklib-layer
           template: template.yaml
+          capabilities:
+            - "CAPABILITY_IAM"
+            - "CAPABILITY_AUTO_EXPAND"
       - name: Set output
         id: getTagVersion
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
