@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "serverlessrepo-rdklib-layer"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1p3znu34dzuws"
+s3_prefix = "serverlessrepo-rdklib-layer"
+region = "ap-southeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

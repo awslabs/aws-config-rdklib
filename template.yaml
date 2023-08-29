@@ -27,7 +27,7 @@ Resources:
     Properties:
       LayerName: rdklib-layer
       Description: rdklib library for authoring Config Rules
-      ContentUri: ./build
+      ContentUri: ./rdklib
       CompatibleRuntimes:
         - python3.7
         - python3.8
