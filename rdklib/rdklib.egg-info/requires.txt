@@ -1,3 +1,0 @@
-rdk
-boto3
-botocore
