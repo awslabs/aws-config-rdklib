@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Metadata:
   AWS::ServerlessRepo::Application:
@@ -7,10 +7,10 @@ Metadata:
     Author: awslabs
     SpdxLicenseId: Apache-2.0
     LicenseUrl: LICENSE
-    ReadmeUrl: README.rst
-    Labels: ['stable']
+    ReadmeUrl: README.md
+    Labels: ["stable"]
     HomePageUrl: https://github.com/awslabs/aws-config-rdklib
-    SemanticVersion: 0.3.0
+    SemanticVersion: 0.3.1
     SourceCodeUrl: https://github.com/awslabs/aws-config-rdklib
 
 Description: >
@@ -32,7 +32,9 @@ Resources:
         - python3.7
         - python3.8
         - python3.9
-      LicenseInfo: 'Apache License, Version 2.0'
+        - python3.10
+        - python3.11
+      LicenseInfo: "Apache License, Version 2.0"
 
 Outputs:
   RdklibLayerArn:
