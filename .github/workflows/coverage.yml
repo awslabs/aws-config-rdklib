@@ -32,7 +32,7 @@ jobs:
         with:
           version: ${{ env.poetry_version }}
           virtualenvs-create: true
-          virtualenvs-in-project: true
+          virtualenvs-in-project: false
       - name: cache deps
         id: cache-deps
         uses: actions/cache@v2
