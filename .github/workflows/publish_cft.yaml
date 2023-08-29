@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::711761543063:role/github-automation-role-update-layers
-          aws-region: ${{ matrix.region }}
+          aws-region: ap-southeast-1
       - run: sam build --use-container
       - run: sam package --s3-bucket ${{ env.samBucket }} --output-template-file packaged.yaml
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ap-southeast-1
