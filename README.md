@@ -77,11 +77,12 @@ Feel free to email <rdk-maintainers@amazon.com>
 - **Benjamin Morris** - _Maintainer, code, testing_
 - **Carlo DePaolis** - _Maintainer, code, testing_
 
-# Acknowledge
+# Acknowledgements
 
-- **Jonathan Rault** - _Maintainer, design, code, testing, feedback_
-- **Ricky Chau** - _Maintainer, code, testing_
-- **Michael Borchert** - _Design, code, testing, feedback_
-- **Joe Lee** - _Design, feedback_
-- **Chris Gutierrez** - _Design, feedback_
 - **Mark Beacom** - _Maintainer, code, testing_
+- **Michael Borchert** - _Design, code, testing, feedback_
+- **Ricky Chau** - _Maintainer, code, testing_
+- **Julio Delgado Jr.** - *Design, testing, feedback*
+- **Chris Gutierrez** - _Design, feedback_
+- **Joe Lee** - _Design, feedback_
+- **Jonathan Rault** - _Maintainer, design, code, testing, feedback_
