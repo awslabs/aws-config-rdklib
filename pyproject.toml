@@ -85,6 +85,7 @@ isort = {extras = ["toml"], version = "^5.11.4"}
 mypy = "^1.3.0"
 debugpy = "^1.6.7"
 ruff = "^0.0.269"
+pytest = "^7.4.0"
 
 [tool.poetry.group.security.dependencies]
 bandit = "^1.7.5"
