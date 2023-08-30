@@ -12,6 +12,26 @@ env:
 jobs:
   samDeploy:
     environment: prod
+    strategy:
+      matrix:
+        region:
+          - "us-east-1"
+          - "us-east-2"
+          - "us-west-1"
+          - "us-west-2"
+          - "ap-south-1"
+          - "ap-northeast-3"
+          - "ap-northeast-2"
+          - "ap-southeast-1"
+          - "ap-southeast-2"
+          - "ap-northeast-1"
+          - "ca-central-1"
+          - "eu-central-1"
+          - "eu-west-1"
+          - "eu-west-2"
+          - "eu-west-3"
+          - "eu-north-1"
+          - "sa-east-1"
     name: SAM Deploy
     runs-on: ubuntu-latest
     permissions:
@@ -29,47 +49,30 @@ jobs:
           aws-region: ap-southeast-1
       - run: sam build --use-container
       - run: sam package --s3-bucket ${{ env.samBucket }} --output-template-file packaged.yaml
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ap-southeast-1
-  # deploy:
-  #   environment: prod
-  #       strategy:
-  #     # Importing the StackSets was failing, so instead, using matrix
-  #     matrix:
-  #       region:
-  #         - "us-east-1"
-  #         - "us-east-2"
-  #         - "us-west-1"
-  #         - "us-west-2"
-  #         - "ap-south-1"
-  #         - "ap-northeast-3"
-  #         - "ap-northeast-2"
-  #         - "ap-southeast-1"
-  #         - "ap-southeast-2"
-  #         - "ap-northeast-1"
-  #         - "ca-central-1"
-  #         - "eu-central-1"
-  #         - "eu-west-1"
-  #         - "eu-west-2"
-  #         - "eu-west-3"
-  #         - "eu-north-1"
-  #         - "sa-east-1"
-  #   name: Create RDK Issue
-  #   runs-on: ubuntu-latest
-  #   # These permissions are needed to interact with GitHub's OIDC Token endpoint.
-  #   permissions:
-  #     id-token: write
-  #     contents: read
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Set output
-  #       id: getTagVersion
-  #       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-  #     - name: Create new issue in aws-config-rdk notifying of new layer version
-  #       uses: dacbd/create-issue-action@main
-  #       with:
-  #         token: ${{ github.token }}
-  #         title: RDKLIB Version ${{ steps.getTagVersion.outputs.tag }} Available
-  #         body: A new tag has been released in rdklib, and RDK should be updated to use the latest layer
-  #         org: awslabs
-  #         repo: aws-config-rdk
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ${{ matrix.region }}
+      - run: |
+        LATEST_LAYER_VER=$(aws lambda list-layer-versions --region ${{ matrix.region }} --layer-name rdklib-layer --max-items 1 | jq -r ".LayerVersions[].Version")
+        aws lambda add-layer-version-permission --region ${{ matrix.region }} --layer-name rdklib-layer --version-number $LATEST_LAYER_VER --statement-id public --action "lambda:GetLayerVersion" --principal "*"
+  rdkIssue:
+    environment: prod
+    name: Create RDK Issue
+    runs-on: ubuntu-latest
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+        with:
+          semver_only: true
+      - name: Create new issue in aws-config-rdk notifying of new layer version
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${{ github.token }}
+          title: RDKLIB Version ${{ steps.get-latest-tag.outputs.tag }} Available
+          body: A new tag has been released in rdklib, and RDK should be updated to use the latest layer
+          org: awslabs
+          repo: aws-config-rdk
