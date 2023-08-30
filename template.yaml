@@ -27,7 +27,7 @@ Resources:
     Properties:
       LayerName: rdklib-layer
       Description: rdklib library for authoring Config Rules
-      ContentUri: ./rdklib
+      ContentUri: ./build # Build directory will be populated during CFT deploy workflow
       CompatibleRuntimes:
         - python3.7
         - python3.8

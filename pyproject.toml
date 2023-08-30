@@ -15,7 +15,7 @@ authors = [
 repository = "https://github.com/awslabs/aws-config-rdklib"
 homepage = "https://github.com/awslabs/aws-config-rdklib"
 readme = "README.md"
-packages = [{include = "rdklib"}]
+packages = [{include = "rdklib"}, {include = "rdklibtest"}]
 keywords = ["amazon", "aws", "awslabs", "rdk", "rdklib", "layer", "lambda", "config", "rules", "compliance"]
 documentation = "https://aws-config-rdklib.readthedocs.io"
 classifiers = [
@@ -76,9 +76,9 @@ build = "poetry build"
 python = "^3.7.2"
 boto3 = "^1.26.139"
 pyyaml = "^6.0"
+rdk = "^0.16.0"
 
 [tool.poetry.group.dev.dependencies]
-rdk = "^0.16.0"
 black = "^22.12.0"
 pydocstyle = "^6.3.0"
 isort = {extras = ["toml"], version = "^5.11.4"}

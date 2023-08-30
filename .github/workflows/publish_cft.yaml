@@ -15,23 +15,23 @@ jobs:
     strategy:
       matrix:
         region:
-          - "us-east-1"
-          - "us-east-2"
-          - "us-west-1"
-          - "us-west-2"
-          - "ap-south-1"
-          - "ap-northeast-3"
-          - "ap-northeast-2"
+          # - "us-east-1"
+          # - "us-east-2"
+          # - "us-west-1"
+          # - "us-west-2"
+          # - "ap-south-1"
+          # - "ap-northeast-3"
+          # - "ap-northeast-2"
           - "ap-southeast-1"
-          - "ap-southeast-2"
-          - "ap-northeast-1"
-          - "ca-central-1"
-          - "eu-central-1"
-          - "eu-west-1"
-          - "eu-west-2"
-          - "eu-west-3"
-          - "eu-north-1"
-          - "sa-east-1"
+          # - "ap-southeast-2"
+          # - "ap-northeast-1"
+          # - "ca-central-1"
+          # - "eu-central-1"
+          # - "eu-west-1"
+          # - "eu-west-2"
+          # - "eu-west-3"
+          # - "eu-north-1"
+          # - "sa-east-1"
     name: SAM Deploy
     runs-on: ubuntu-latest
     permissions:
@@ -47,6 +47,14 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::711761543063:role/github-automation-role-update-layers
           aws-region: ${{ matrix.region }}
+      - name: Pre-package steps
+        run: |
+          poetry export -f requirements.txt --output requirements.txt
+          pip install -r requirements.txt -t build/python
+          cp -r rdklib build/lib/rdklib
+          cp -r rdklib build/python/rdklib
+          cp -r rdklibtest build/lib/rdklibtest
+          cp -r rdklibtest build/python/rdklibtest
       - run: sam build --use-container
       - run: sam package --s3-bucket ${{ env.samBucket }} --output-template-file packaged.yaml
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ${{ matrix.region }}
