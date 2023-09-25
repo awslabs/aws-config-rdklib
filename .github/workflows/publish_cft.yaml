@@ -54,7 +54,6 @@ jobs:
           poetry export -f requirements.txt --output requirements.txt
           pip install -r requirements.txt -t build/python
           mkdir build/lib
-          mkdir build/python
           cp -r rdklib build/lib/rdklib
           cp -r rdklib build/python/rdklib
           cp -r rdklibtest build/lib/rdklibtest
