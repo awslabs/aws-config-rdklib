@@ -47,6 +47,8 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::711761543063:role/github-automation-role-update-layers
           aws-region: ${{ matrix.region }}
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
       - name: Pre-package steps
         run: |
           poetry export -f requirements.txt --output requirements.txt
