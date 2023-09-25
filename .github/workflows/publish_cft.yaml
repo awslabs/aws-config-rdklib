@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  samBucket: aws-sam-cli-managed-default-samclisourcebucket-1p3znu34dzuws
+  samBucketPrefix: "aws-sam-cli-rdklib-build-bucket-"
 
 jobs:
   samDeploy:
