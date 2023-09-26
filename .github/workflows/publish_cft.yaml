@@ -60,7 +60,7 @@ jobs:
           cp -r rdklibtest build/python/rdklibtest
       - run: sam build --use-container
       - run: sam package --s3-bucket "${{ env.samBucketPrefix }}${{ matrix.region }}" --output-template-file packaged.yaml
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ${{ matrix.region }}
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --s3-bucket "${{ env.samBucketPrefix }}${{ matrix.region }}" --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ${{ matrix.region }}
       - run: |
           LATEST_LAYER_VER=$(aws lambda list-layer-versions --region ${{ matrix.region }} --layer-name rdklib-layer --max-items 1 | jq -r ".LayerVersions[].Version")
           aws lambda add-layer-version-permission --region ${{ matrix.region }} --layer-name rdklib-layer --version-number $LATEST_LAYER_VER --statement-id public --action "lambda:GetLayerVersion" --principal "*"
