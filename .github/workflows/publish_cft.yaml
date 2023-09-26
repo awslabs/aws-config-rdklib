@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  samBucket: aws-sam-cli-managed-default-samclisourcebucket-1p3znu34dzuws
+  samBucketPrefix: "aws-sam-cli-rdklib-build-bucket-"
 
 jobs:
   samDeploy:
@@ -59,7 +59,7 @@ jobs:
           cp -r rdklibtest build/lib/rdklibtest
           cp -r rdklibtest build/python/rdklibtest
       - run: sam build --use-container
-      - run: sam package --s3-bucket ${{ env.samBucket }} --output-template-file packaged.yaml
+      - run: sam package --s3-bucket "${{ env.samBucketPrefix }}${{ matrix.region }}" --output-template-file packaged.yaml
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ${{ matrix.region }}
       - run: |
           LATEST_LAYER_VER=$(aws lambda list-layer-versions --region ${{ matrix.region }} --layer-name rdklib-layer --max-items 1 | jq -r ".LayerVersions[].Version")
