@@ -76,7 +76,7 @@ build = "poetry build"
 python = "^3.7.2"
 boto3 = "^1.26.139"
 pyyaml = "^6.0"
-rdk = "^0.16.0"
+rdk = "^0.17"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"
