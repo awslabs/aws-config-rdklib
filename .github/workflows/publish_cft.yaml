@@ -2,8 +2,8 @@ name: Publish rdklib CFT
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - "master"
   workflow_dispatch:
 
 env:
