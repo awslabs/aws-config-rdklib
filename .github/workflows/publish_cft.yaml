@@ -71,24 +71,25 @@ jobs:
       - run: |
           LATEST_LAYER_VER=$(aws lambda list-layer-versions --region ${{ matrix.region }} --layer-name rdklib-layer --max-items 1 | jq -r ".LayerVersions[].Version")
           aws lambda add-layer-version-permission --region ${{ matrix.region }} --layer-name rdklib-layer --version-number $LATEST_LAYER_VER --statement-id public --action "lambda:GetLayerVersion" --principal "*"
-  rdkIssue:
-    environment: prod
-    name: Create RDK Issue
-    runs-on: ubuntu-latest
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
-    permissions:
-      id-token: write
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-        with:
-          semver_only: true
-      - name: Create new issue in aws-config-rdk notifying of new layer version
-        uses: dacbd/create-issue-action@main
-        with:
-          token: ${{ github.token }}
-          title: RDKLIB Version ${{ steps.get-latest-tag.outputs.tag }} Available
-          body: A new tag has been released in rdklib, and RDK should be updated to use the latest layer
+  # Commenting this out because the action always fails
+  # rdkIssue:
+  #   environment: prod
+  #   name: Create RDK Issue
+  #   runs-on: ubuntu-latest
+  #   # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+  #   permissions:
+  #     id-token: write
+  #     contents: write
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - uses: actions-ecosystem/action-get-latest-tag@v1
+  #       id: get-latest-tag
+  #       with:
+  #         semver_only: true
+  #     - name: Create new issue in aws-config-rdk notifying of new layer version
+  #       uses: dacbd/create-issue-action@main
+  #       with:
+  #         token: ${{ github.token }}
+  #         title: RDKLIB Version ${{ steps.get-latest-tag.outputs.tag }} Available
+  #         body: A new tag has been released in rdklib, and RDK should be updated to use the latest layer

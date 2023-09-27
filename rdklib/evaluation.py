@@ -36,6 +36,9 @@ class Evaluation:
             raise Exception('The complianceType is not valid. Valid values include: ComplianceType.COMPLIANT, ComplianceType.COMPLIANT and ComplianceType.NOT_APPLICABLE')
         self.complianceType = complianceType
 
+    def __repr__(self):
+        return f"Evaluation(annotation='{self.annotation}', complianceResourceId='{self.complianceResourceId}', complianceResourceType='{self.complianceResourceType}', complianceType='{self.complianceType}')"
+
     def __eq__(self, other):
         return (
             (
