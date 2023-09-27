@@ -58,7 +58,13 @@ jobs:
           cp -r rdklib build/python/rdklib
           cp -r rdklibtest build/lib/rdklibtest
           cp -r rdklibtest build/python/rdklibtest
-          rm -r build/python/botocore # botocore bloats the layer without any performance improvement
+          # Boto bloats the layer without any performance improvement, as Lambda will already have it
+          # https://gist.github.com/gene1wood/4a052f39490fae00e0c3
+          rm -r build/python/botocore
+          rm -r build/python/boto3
+          rm -r build/python/botocore-*.dist-info
+          rm -r build/python/boto3-*.dist-info
+          
       - run: sam build --use-container
       - run: sam package --s3-bucket "${{ env.samBucketPrefix }}${{ matrix.region }}" --output-template-file packaged.yaml
       - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --s3-bucket "${{ env.samBucketPrefix }}${{ matrix.region }}" --template-file packaged.yaml --stack-name rdklib-layer-sam --capabilities CAPABILITY_IAM --region ${{ matrix.region }}
