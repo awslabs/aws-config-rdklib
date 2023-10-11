@@ -11,7 +11,10 @@
 
 from rdklib.evaluation import ComplianceType, Evaluation
 
-from rdklib.util.external import process_evaluations
+try:
+    from rdklib.util.internal import process_evaluations
+except ImportError as ex:
+    from rdklib.util.external import process_evaluations
 
 
 # Build the evaluations list to return
