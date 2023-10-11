@@ -31,8 +31,6 @@ class Evaluator:
 
     def handle(self, event, context):
 
-        print(f'DEBUG: handling event - {event}')
-
         check_defined(event, 'event')
 
         client_factory = ClientFactory(role_arn=self.__rdk_rule.get_execution_role_arn(event), region=self.__rdk_rule.get_assume_role_region(event), assume_role_mode=self.__rdk_rule.get_assume_role_mode(event))
