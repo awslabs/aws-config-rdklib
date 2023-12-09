@@ -65,6 +65,7 @@ jobs:
           rm -r build/python/botocore-*.dist-info
           rm -r build/python/boto3-*.dist-info
           rm build/lib/rdklib/util/internal.py # Remove an internal python file that only causes trouble
+          rm build/python/rdklib/util/internal.py # Remove an internal python file that only causes trouble
           
       - run: sam build --use-container
       - run: sam package --s3-bucket "${{ env.samBucketPrefix }}${{ matrix.region }}" --output-template-file packaged.yaml
