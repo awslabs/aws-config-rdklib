@@ -99,6 +99,11 @@ def convert_into_notification_config_item(grh_config_item):
         resourceName = grh_config_item['resourceName']
     else:
         resourceName = grh_config_item['resourceId']
+    # Availability Zone is also not guaranteed to be populated, check it first
+    if 'availabilityZone' in grh_config_item:
+        availabilityZone = grh_config_item['availabilityZone']
+    else:
+        availabilityZone = "not-specified"
     return {
         'configurationItemCaptureTime': grh_config_item['configurationItemCaptureTime'],
         'configurationStateId': grh_config_item['configurationStateId'],
@@ -109,7 +114,7 @@ def convert_into_notification_config_item(grh_config_item):
         'resourceName': resourceName,
         'ARN': grh_config_item['arn'],
         'awsRegion': grh_config_item['awsRegion'],
-        'availabilityZone': grh_config_item['availabilityZone'],
+        'availabilityZone': availabilityZone,
         'configurationStateMd5Hash': grh_config_item['configurationItemMD5Hash'],
         'resourceCreationTime': grh_config_item['resourceCreationTime'],
         'relatedEvents': grh_config_item['relatedEvents'],
