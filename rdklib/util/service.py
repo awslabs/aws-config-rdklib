@@ -94,29 +94,25 @@ def get_resource_config_history(config_client, invoking_event):
     )
 
 def convert_into_notification_config_item(grh_config_item):
-    # Resource Name is not guaranteed to be populated, fall back to resourceId if not present
-    if 'resourceName' in grh_config_item:
-        resourceName = grh_config_item['resourceName']
-    else:
-        resourceName = grh_config_item['resourceId']
     return {
-        'configurationItemCaptureTime': grh_config_item['configurationItemCaptureTime'],
-        'configurationStateId': grh_config_item['configurationStateId'],
-        'awsAccountId': grh_config_item['accountId'],
-        'configurationItemStatus': grh_config_item['configurationItemStatus'],
-        'resourceType': grh_config_item['resourceType'],
-        'resourceId': grh_config_item['resourceId'],
-        'resourceName': resourceName,
-        'ARN': grh_config_item['arn'],
-        'awsRegion': grh_config_item['awsRegion'],
-        'availabilityZone': grh_config_item['availabilityZone'],
-        'configurationStateMd5Hash': grh_config_item['configurationItemMD5Hash'],
-        'resourceCreationTime': grh_config_item['resourceCreationTime'],
-        'relatedEvents': grh_config_item['relatedEvents'],
-        'tags': grh_config_item['tags'],
-        'relationships': extract_relationships(grh_config_item['relationships']),
-        'configuration': json.loads(grh_config_item['configuration']),
-        'supplementaryConfiguration': extract_supplementary_configuration(grh_config_item['supplementaryConfiguration'])
+        'configurationItemCaptureTime': grh_config_item.get('configurationItemCaptureTime'),
+        'configurationStateId': grh_config_item.get('configurationStateId'),
+        'awsAccountId': grh_config_item.get('accountId'),
+        'configurationItemStatus': grh_config_item.get('configurationItemStatus'),
+        'resourceType': grh_config_item.get('resourceType'),
+        'resourceId': grh_config_item.get('resourceId'),
+        'resourceName': grh_config_item.get('resourceName', grh_config_item.get('resourceId')),
+        'ARN': grh_config_item.get('arn'),
+        'awsRegion': grh_config_item.get('awsRegion'),
+        'availabilityZone': grh_config_item.get('availabilityZone'),
+        'configurationStateMd5Hash': grh_config_item.get('configurationItemMD5Hash'),
+        'resourceCreationTime': grh_config_item.get('resourceCreationTime'),
+        'relatedEvents': grh_config_item.get('relatedEvents'),
+        'tags': grh_config_item.get('tags'),
+        'relationships': extract_relationships(grh_config_item.get('relationships')),
+        'configuration': json.loads(grh_config_item.get('configuration', {})),
+        'supplementaryConfiguration': extract_supplementary_configuration(
+            grh_config_item.get('supplementaryConfiguration', {})),
     }
 
 def extract_supplementary_configuration(grh_supplementary_configuration):
@@ -124,7 +120,7 @@ def extract_supplementary_configuration(grh_supplementary_configuration):
             grh_supplementary_configuration.items()}
 
 def extract_relationships(grh_relationships):
-    return [{'name': relationship['relationshipName'],
-             'resourceId': relationship['resourceId'],
-             'resourceName': relationship['resourceName'],
-             'resourceType': relationship['resourceType']} for relationship in grh_relationships]
+    return [{'name': relationship.get('relationshipName'),
+             'resourceId': relationship.get('resourceId'),
+             'resourceName': relationship.get('resourceName'),
+             'resourceType': relationship.get('resourceType')} for relationship in grh_relationships]
