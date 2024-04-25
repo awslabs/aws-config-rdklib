@@ -37,7 +37,7 @@ class Evaluation:
         self.complianceType = complianceType
 
     def __repr__(self):
-        return f"Evaluation(annotation='{self.annotation}', complianceResourceId='{self.complianceResourceId}', complianceResourceType='{self.complianceResourceType}', complianceType='{self.complianceType}')"
+        return f"Evaluation(annotation='{self.annotation}', resourceId='{self.complianceResourceId}', resourceType='{self.complianceResourceType}', complianceType='{self.complianceType}')"
 
     def __eq__(self, other):
         return (
