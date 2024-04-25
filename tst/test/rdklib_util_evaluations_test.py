@@ -1,13 +1,13 @@
+import importlib
 import json
+import os
+import sys
 import unittest
-from unittest.mock import patch, MagicMock
+from importlib.abc import MetaPathFinder
+from unittest.mock import MagicMock, patch
+
 from rdklib.configrule import ConfigRule
 from rdklib.evaluation import ComplianceType, Evaluation
-
-import importlib
-
-import sys
-import os
 
 # Get the absolute path of the current script
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -36,6 +36,24 @@ def return_first_item(event, client_factory, evaluations):
     return evaluations[0]
 
 
+class FailLoader(MetaPathFinder):
+    """To raise ImportError for test.
+
+    - Answer: Mocking ImportError in Python
+        https://stackoverflow.com/a/2481588/12721873
+    """
+
+    def __init__(self, modules):
+        self.modules = modules
+
+    # pylint: disable-next=unused-argument
+    def find_spec(self, fullname, path=None, target=None):
+        """Raise ImportError for the module in self.modules."""
+        print(fullname)
+        if fullname in self.modules:
+            raise ImportError(f"Debug import failure for {fullname}")
+
+
 @patch.object(CLIENT_FACTORY, "build_client", MagicMock(side_effect=mock_get_client))
 @patch.object(CODE, "process_evaluations", MagicMock(side_effect=return_same_value))
 class rdklibUtilEvaluationsTest(unittest.TestCase):
@@ -43,6 +61,28 @@ class rdklibUtilEvaluationsTest(unittest.TestCase):
         "invokingEvent": json.dumps({"notificationCreationTime": "some-date-time"}),
         "configRuleName": "some-role-name",
     }
+
+    def test_import_succeed(self):
+        """Importing evaluations should import internal when importing internal succeeds."""
+        code = importlib.import_module("rdklib.util.evaluations")
+        self.assertEqual(code.process_evaluations, CODE.process_evaluations)
+
+    @patch("rdklib.util.internal.process_evaluations", "internal")
+    @patch("rdklib.util.external.process_evaluations", "external")
+    def test_import_error(self):
+        """Importing evaluations should import external when importing internal fails.
+
+        - Answer: Mocking ImportError in Python
+          https://stackoverflow.com/a/2481588/12721873
+        """
+        from rdklib.util import evaluations  # pylint: disable=import-outside-toplevel
+
+        module_name = "rdklib.util.internal"
+        sys.meta_path.insert(0, FailLoader([module_name]))
+        del sys.modules[module_name]
+        importlib.reload(evaluations)
+        self.assertNotEqual(evaluations.process_evaluations, "internal")
+        self.assertEqual(evaluations.process_evaluations, "external")
 
     def test_process_event_evaluations_list(self):
         eval_result = [Evaluation(ComplianceType.COMPLIANT, annotation="some-annotation")]

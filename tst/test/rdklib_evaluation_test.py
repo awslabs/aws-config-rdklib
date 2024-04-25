@@ -1,12 +1,11 @@
+import importlib
 import json
+import os
+import sys
 import unittest
 
 # from rdklib.evaluation import ComplianceType, Evaluation, build_annotation
 
-import importlib
-
-import sys
-import os
 
 # Get the absolute path of the current script
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -188,3 +187,18 @@ class rdklibEvaluationTest(unittest.TestCase):
             "Annotation": "some-annotation",
         }
         self.assertDictEqual(response, resp_expected)
+
+    def test_evaluation_repr(self):
+        """The function: __repr__() should return the string representation of the object."""
+        evaluation = CODE.Evaluation(
+            CODE.ComplianceType.NON_COMPLIANT,
+            "some-resource-id",
+            "some-resource-type",
+            "Annotation message for test.",
+        )
+        # pylint: disable-next=unused-import,import-outside-toplevel
+        from rdklib.evaluation import Evaluation  # noqa: F401
+
+        # pylint: disable-next=eval-used
+        actual = eval(str(evaluation))  # noqa: DUO104
+        self.assertEqual(actual, evaluation)

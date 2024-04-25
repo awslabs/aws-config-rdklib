@@ -1,9 +1,7 @@
-import unittest
-
 import importlib
-
-import sys
 import os
+import sys
+import unittest
 
 # Get the absolute path of the current script
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -80,3 +78,30 @@ class rdklibConfigRuleTest(unittest.TestCase):
         self.assertEqual("COMPLIANT", my_changed_rule.evaluate_periodic({}, {}, {}))
         self.assertEqual("NON_COMPLIANT", my_changed_rule.evaluate_change({}, {}, {}, {}))
         self.assertEqual("Some_ARN", my_changed_rule.get_execution_role_arn({}))
+
+    def test_get_assume_role_region(self):
+        """The function: get_assume_role_region() should return appropriate value."""
+        my_empty_rule = TEST_RULE_EMPTY()
+        parameterized = [
+            ({}, None),
+            ({"ruleParameters": "{}"}, None),
+            ({"ruleParameters": '{"ExecutionRoleRegion": "us-west-2"}'}, "us-west-2"),
+        ]
+        for event, expected in parameterized:
+            with self.subTest(event):
+                self.assertEqual(my_empty_rule.get_assume_role_region(event), expected)
+
+    def test_get_assume_role_mode(self):
+        """The function: get_assume_role_mode() should return appropriate value."""
+        my_empty_rule = TEST_RULE_EMPTY()
+        parameterized = [
+            ({}, True),
+            ({"ruleParameters": "{}"}, True),
+            ({"ruleParameters": '{"AssumeRoleMode": "false"}'}, False),
+            ({"ruleParameters": '{"AssumeRoleMode": "FALSE"}'}, False),
+            ({"ruleParameters": '{"AssumeRoleMode": "true"}'}, True),
+            ({"ruleParameters": '{"AssumeRoleMode": "TRUE"}'}, True),
+        ]
+        for event, expected in parameterized:
+            with self.subTest(event):
+                self.assertEqual(expected, my_empty_rule.get_assume_role_mode(event))
