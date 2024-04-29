@@ -1,10 +1,10 @@
-import unittest
-from unittest.mock import patch, MagicMock
-import botocore
 import importlib
-
-import sys
 import os
+import sys
+import unittest
+from unittest.mock import MagicMock, patch
+
+import botocore
 
 # Get the absolute path of the current script
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -99,3 +99,24 @@ class rdklibClientFactoryTest(unittest.TestCase):
         self.assertDictEqual(
             context.exception.response, {"Error": {"Code": "InternalError", "Message": "InternalError"}}
         )
+
+    def test_when_not_assume_role_mode_init(self):
+        """ClientFactory should return the client assume role mode disabled."""
+        client_factory = CODE.ClientFactory(
+            role_arn="arn:aws:iam:::role/some-role-name",
+            region="some-region",
+            assume_role_mode=False,
+        )
+        response = client_factory.build_client("other")
+        self.assertNotEqual(response, STS_CLIENT_MOCK)
+        self.assertEqual(response, OTHER_CLIENT_MOCK)
+
+    def test_when_not_assume_role_mode_call(self):
+        """ClientFactory should return the client assume role mode disabled."""
+        client_factory = CODE.ClientFactory(
+            role_arn="arn:aws:iam:::role/some-role-name",
+            region="some-region",
+        )
+        response = client_factory.build_client("other", assume_role_mode=False)
+        self.assertNotEqual(response, STS_CLIENT_MOCK)
+        self.assertEqual(response, OTHER_CLIENT_MOCK)
