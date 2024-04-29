@@ -76,10 +76,12 @@ install = "poetry install"
 build = "poetry build"
 
 [tool.poetry.dependencies]
-python = "^3.7.2"
+python = "^3.8.0"
 boto3 = "^1.26.139"
 pyyaml = "^6.0"
 rdk = "^0.17"
+bandit = "^1.7.7"
+idna = "^3.7"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"
@@ -91,7 +93,7 @@ ruff = "^0.0.269"
 pytest = "^7.0.0"
 
 [tool.poetry.group.security.dependencies]
-bandit = "^1.7.5"
+bandit = "^1.7.7"
 safety = "^2.3.5"
 
 [tool.poetry.group.types.dependencies]
