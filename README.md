@@ -75,7 +75,6 @@ Feel free to email <rdk-maintainers@amazon.com>
 # Contacts
 
 - **Benjamin Morris** - _Maintainer, code, testing_
-- **Carlo DePaolis** - _Maintainer, code, testing_
 
 # Acknowledgements
 
@@ -86,3 +85,4 @@ Feel free to email <rdk-maintainers@amazon.com>
 - **Chris Gutierrez** - _Design, feedback_
 - **Joe Lee** - _Design, feedback_
 - **Jonathan Rault** - _Maintainer, design, code, testing, feedback_
+- **Carlo DePaolis** - _Maintainer, code, testing_
