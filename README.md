@@ -64,6 +64,13 @@ RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the libra
     rdk deploy YOUR_RULE_NAME --rdklib-layer-arn YOUR_RDKLIB_LAYER_ARN
 ```
 
+# FAQs
+
+- Q. What is the `client_factory` that I see in my `rdklib` rules?
+    - A. A `client_factory` is a class that allows for dynamic provisioning of a `boto3` client. In an `rdklib` rule, you should treat `client_factory` as the way to create a `boto3` client. So instead of calling `client = boto3.client("s3")`, you would call `client = client_factory.build_client("s3")`.
+        - Q. ...Why?
+            - A. It's mainly there to allow for unit testing. In a unit testing scenario, your `boto3` client will be replaced with a mock version of the client so that it can perform tests of your rule without making actual calls to AWS.  
+
 # License
 
 This project is licensed under the Apache-2.0 License.
