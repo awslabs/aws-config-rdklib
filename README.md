@@ -38,7 +38,7 @@ To use `rdklib`, specify a `python3.x-lib` runtime when you run `rdk create` (or
     rdk create YOUR_RULE_NAME --runtime python3.12-lib --resource-types AWS::S3::Bucket
 ```
 
-After you've created your rule, update the `.py` file that was generated, adding your custom logic within the `evaluate_change()` method. If you need to create a `boto3` client, use the `client_factory` helper (eg. instead of `boto3.client("s3")`, use `client_factory.build_client("s3")`). Examples of `rdklib` rules can be found [here](https://github.com/awslabs/aws-config-rules/blob/master/python-rdklib/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH/config_rule/config-version/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH.py). 
+After you've created your rule, update the `.py` file that was generated, adding your custom logic within the `evaluate_change()` method for change-triggered rules or the `evaluate_periodic()` method for periodic rules (you may need to uncomment `evaluate_periodic()`. If you need to create a `boto3` client, use the `client_factory` helper (eg. instead of `boto3.client("s3")`, use `client_factory.build_client("s3")`). Examples of `rdklib` rules can be found [here](https://github.com/awslabs/aws-config-rules/blob/master/python-rdklib/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH/config_rule/config-version/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH.py). 
 
 ## Deploy your rule with RDKlib layer
 
