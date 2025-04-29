@@ -2,8 +2,7 @@
 
 [![image](https://github.com/awslabs/aws-config-rdklib/workflows/ci/badge.svg?branch=master)](https://github.com/awslabs/aws-config-rdklib/actions?query=workflow%3Aci+branch%3Amaster)
 
-RDKlib is a Python library to enable you to **run custom AWS Config
-Rules at scale**. The library can be used to:
+RDKlib is a Python library to enable you to **run custom AWS Config Rules at scale**. The library can be used to:
 
 - Help you to focus only on the compliance logic, while the library
   does the heavy lifting
@@ -23,26 +22,27 @@ pip install rdklib
 
 ## Create a rule using the RDK
 
-The runtime of your RDK rule have to be set to python3.11-lib in the RDK
-to provide you the Rule template.
+> Note: you need to [install the RDK](https://github.com/awslabs/aws-config-rdk#getting-started) first.
+
+To use `rdklib`, specify a `python3.x-lib` runtime when you run `rdk create` (or don't specify any runtime; `rdklib` is now the default for `rdk create`). This will populate the `rdklib` runtime in the RDK `parameters.json` of your Rule template. Examples:
 
 - For periodic trigger:
 
 ```bash
-    rdk create YOUR_RULE_NAME --runtime python3.11-lib --maximum-frequency TwentyFour_Hours
+    rdk create YOUR_RULE_NAME --runtime python3.12-lib --maximum-frequency TwentyFour_Hours
 ```
 
 - For configuration change trigger (for example S3 Bucket):
 
 ```bash
-    rdk create YOUR_RULE_NAME --runtime python3.11-lib --resource-types AWS::S3::Bucket
+    rdk create YOUR_RULE_NAME --runtime python3.12-lib --resource-types AWS::S3::Bucket
 ```
 
-> Note: you need to [install the RDK](https://github.com/awslabs/aws-config-rdk#getting-started) first.
+After you've created your rule, update the `.py` file that was generated, adding your custom logic within the `evaluate_change()` method. If you need to create a `boto3` client, use the `client_factory` helper (eg. instead of `boto3.client("s3")`, use `client_factory.build_client("s3")`). Examples of `rdklib` rules can be found [here](https://github.com/awslabs/aws-config-rules/blob/master/python-rdklib/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH/config_rule/config-version/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH/EC2_INSTANCE_EBS_VOLUME_TAGS_MATCH.py). 
 
 ## Deploy your rule with RDKlib layer
 
-RDKLib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
+RDKlib is designed to work as a AWS Lambda Layer. It allows you to use the library without needing to include it in your deployment package.
 
 1.  Install RDKlib layer (with AWS CLI)
 
