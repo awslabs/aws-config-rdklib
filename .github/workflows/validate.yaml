@@ -38,7 +38,7 @@ jobs:
   #   name: Run Unit Tests
   #   strategy:
   #     matrix:
-  #       version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
+  #       version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
   #       os: [ubuntu-latest]
   #   runs-on: ${{ matrix.os }}
   #   steps:
@@ -71,7 +71,7 @@ jobs:
       - name: Setup Dependencies
         uses: "./.github/actions/dep-setup"
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Run Security Checks
         shell: bash
