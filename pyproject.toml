@@ -1,4 +1,4 @@
-#    Copyright 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#    Copyright 2025 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
 #
@@ -7,6 +7,7 @@
 #    or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 [project]
 name = "rdklib"
+version = "0.3.6"
 requires-python = ">=3.7"
 
 [tool.poetry]
@@ -81,25 +82,25 @@ install = "poetry install"
 build = "poetry build"
 
 [tool.poetry.dependencies]
-python = "^3.8.0"
-boto3 = "^1.26.139"
+python = "^3.10.0"
+boto3 = "^1.35.0"
 pyyaml = "^6.0"
 rdk = "^0.17"
 bandit = "^1.7.7"
 idna = "^3.7"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.3.0"
+black = "^25.1.0"
 pydocstyle = "^6.3.0"
 isort = {extras = ["toml"], version = "^5.11.4"}
-mypy = "^1.3.0"
+mypy = "^1.16.1"
 debugpy = "^1.6.7"
-ruff = "^0.0.269"
+ruff = "^0.12.3"
 pytest = "^7.0.0"
 
 [tool.poetry.group.security.dependencies]
-bandit = "^1.7.7"
-safety = "^2.3.5"
+bandit = "^1.8.3"
+safety = "^3.6.0"
 
 [tool.poetry.group.types.dependencies]
 types-pyyaml = "^6.0.12.10"
@@ -107,10 +108,13 @@ boto3-stubs = {extras = ["cloudformation", "config", "iam", "s3", "sts"], versio
 
 
 [tool.poetry.group.docs.dependencies]
-mkdocs = "^1.4.3"
-mkdocs-material = "^9.1.14"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.12"
 mkdocstrings-python = "^1.0.0"
 markdown-include = "^0.8.1"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
 
 [build-system]
 requires = ["poetry-core"]
