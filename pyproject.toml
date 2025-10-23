@@ -91,7 +91,7 @@ idna = "^3.7"
 urllib3 = "^2.5"
 requests = "^2.32"
 regex = "^2025.2"
-authlib = "^1.6"
+authlib = "^1.6.5"
 
 [tool.poetry.group.dev.dependencies]
 black = "^25.1"
