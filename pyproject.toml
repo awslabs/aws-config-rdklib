@@ -82,21 +82,25 @@ install = "poetry install"
 build = "poetry build"
 
 [tool.poetry.dependencies]
-python = "^3.10.0"
-boto3 = "^1.35.0"
-pyyaml = "^6.0"
+python = "^3.10"
+boto3 = "^1.35"
+pyyaml = "^6"
 rdk = "^0.17"
 bandit = "^1.7.7"
 idna = "^3.7"
+urllib3 = "^2.5"
+requests = "^2.32"
+regex = "^2025.2"
+authlib = "^1.6"
 
 [tool.poetry.group.dev.dependencies]
-black = "^25.1.0"
-pydocstyle = "^6.3.0"
+black = "^25.1"
+pydocstyle = "^6.3"
 isort = {extras = ["toml"], version = "^5.11.4"}
 mypy = "^1.16.1"
 debugpy = "^1.6.7"
 ruff = "^0.12.3"
-pytest = "^7.0.0"
+pytest = "^7.0"
 jinja2 = "^3.1.6"
 setuptools = "^78.1.1"
 
@@ -112,7 +116,7 @@ boto3-stubs = {extras = ["cloudformation", "config", "iam", "s3", "sts"], versio
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.6.1"
 mkdocs-material = "^9.6.12"
-mkdocstrings-python = "^1.0.0"
+mkdocstrings-python = "^1.0"
 markdown-include = "^0.8.1"
 
 [tool.poetry.requires-plugins]
