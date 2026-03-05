@@ -8,7 +8,7 @@
 [project]
 name = "rdklib"
 version = "0.3.9"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 
 [tool.poetry]
 name = "rdklib"
@@ -27,9 +27,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
