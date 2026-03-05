@@ -22,9 +22,9 @@ griffe==0.28.2 ; python_full_version >= "3.7.2" and python_full_version < "4.0.0
 idna==3.11; python_full_version >= "3.7.2" and python_full_version < "4.0.0" \
     --hash=sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4 \
     --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
-importlib-metadata==4.13.0 ; python_full_version >= "3.7.2" and python_version < "3.10" \
-    --hash=sha256:8a8a81bcf996e74fee46f0d16bd3eaa382a7eb20fd82445c3ad11f4090334116 \
-    --hash=sha256:dd0173e8f150d6815e098fd354f6414b0f079af4644ddfe90c71e2fc6174346d
+importlib-metadata==8.7.1 ; python_full_version >= "3.7.2" and python_version < "3.10" \
+    --hash=sha256:49fef1ae6440c182052f407c8d34a68f72efc36db9ca90dc0113398f2fdde8bb \
+    --hash=sha256:5a1f80bf1daa489495071efbb095d75a634cf28a8bc299581244063b53176151
 jinja2==3.1.6; python_full_version >= "3.7.2" and python_full_version < "4.0.0" \
     --hash=sha256:31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852 \
     --hash=sha256:6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61
