@@ -7,12 +7,12 @@
 #    or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 [project]
 name = "rdklib"
-version = "0.3.8"
+version = "0.3.9"
 requires-python = ">=3.7"
 
 [tool.poetry]
 name = "rdklib"
-version = "0.3.8"
+version = "0.3.9"
 description = "Rule Development Kit Library for AWS Config"
 authors = [
     "AWS RDK Maintainers <rdk-maintainers@amazon.com>",
@@ -82,26 +82,29 @@ install = "poetry install"
 build = "poetry build"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-boto3 = "^1.35"
-pyyaml = "^6"
-rdk = "^0.17"
-bandit = "^1.7.7"
-idna = "^3.7"
-urllib3 = "^2.5"
-requests = "^2.32"
-regex = "^2025.2"
-authlib = "^1.6.5"
+authlib      = "^1.6.9"
+bandit       = "^1.7.7"
+boto3        = "^1.35"
+cryptography = "^46.0"
+filelock     = "^3.25"
+idna         = "^3.7"
+python       = "^3.10"
+pyyaml       = "^6"
+rdk          = "^0.17"
+regex        = "^2025.2"
+requests     = "^2.32"
+urllib3      = "^2.6"
+
 
 [tool.poetry.group.dev.dependencies]
-black = "^25.1"
+black      = "^25.1"
+debugpy    = "^1.6.7"
+isort      = {extras = ["toml"], version = "^5.11.4"}
+jinja2     = "^3.1.6"
+mypy       = "^1.16.1"
 pydocstyle = "^6.3"
-isort = {extras = ["toml"], version = "^5.11.4"}
-mypy = "^1.16.1"
-debugpy = "^1.6.7"
-ruff = "^0.12.3"
-pytest = "^7.0"
-jinja2 = "^3.1.6"
+pytest     = "^7.0"
+ruff       = "^0.12.3"
 setuptools = "^78.1.1"
 
 [tool.poetry.group.security.dependencies]
@@ -114,10 +117,11 @@ boto3-stubs = {extras = ["cloudformation", "config", "iam", "s3", "sts"], versio
 
 
 [tool.poetry.group.docs.dependencies]
-mkdocs = "^1.6.1"
-mkdocs-material = "^9.6.12"
-mkdocstrings-python = "^1.0"
-markdown-include = "^0.8.1"
+markdown-include    = "^0.8.1"
+mkdocs              = "^1.6.1"
+mkdocs-material     = "^9.7.3"
+mkdocstrings-python = "^1.18.2"
+pymdown-extensions  = "^10.21.0"
 
 [tool.poetry.requires-plugins]
 poetry-plugin-export = ">=1.8"
